@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html lang="th" class="h-full bg-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบตอบรับ e-Meeting องค์การนักศึกษามหาวิทยาลัยเชียงใหม่</title>
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Google Fonts: Google Sans & Noto Sans Thai Looped (Gemini & Google Workspace Typography) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Google Sans Official Webfont (as used in Gemini & Google Workspace) */
+        @font-face {
+            font-family: 'Google Sans';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url(https://fonts.gstatic.com/s/googlesans/v58/4UaGrEJvNYqtcxcr576NUp5OOestml0.woff2) format('woff2');
+        }
+        @font-face {
+            font-family: 'Google Sans';
+            font-style: normal;
+            font-weight: 500;
+            font-display: swap;
+            src: url(https://fonts.gstatic.com/s/googlesans/v58/4UabrEJvNYqtcxcr576NUp5aG9nbl11dFw.woff2) format('woff2');
+        }
+        @font-face {
+            font-family: 'Google Sans';
+            font-style: normal;
+            font-weight: 600;
+            font-display: swap;
+            src: url(https://fonts.gstatic.com/s/googlesans/v58/4UabrEJvNYqtcxcr576NUp5aG9nbl11dFw.woff2) format('woff2');
+        }
+        @font-face {
+            font-family: 'Google Sans';
+            font-style: normal;
+            font-weight: 700;
+            font-display: swap;
+            src: url(https://fonts.gstatic.com/s/googlesans/v58/4UabrEJvNYqtcxcr576NUp5AMNnbl11dFw.woff2) format('woff2');
+        }
+        @font-face {
+            font-family: 'Google Sans Text';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url(https://fonts.gstatic.com/s/googlesanstext/v21/5aUu9-KzpRiLCAtOuYsf7ElqX3E.woff2) format('woff2');
+        }
+        @font-face {
+            font-family: 'Google Sans Text';
+            font-style: normal;
+            font-weight: 500;
+            font-display: swap;
+            src: url(https://fonts.gstatic.com/s/googlesanstext/v21/5aUv9-KzpRiLCAtOuYsf7ElqD3cW5w.woff2) format('woff2');
+        }
+        @font-face {
+            font-family: 'Google Sans Text';
+            font-style: normal;
+            font-weight: 700;
+            font-display: swap;
+            src: url(https://fonts.gstatic.com/s/googlesanstext/v21/5aUv9-KzpRiLCAtOuYsf7ElqL3gW5w.woff2) format('woff2');
+        }
+
+        body { 
+            font-family: 'Google Sans', 'Google Sans Text', 'Noto Sans Thai Looped', 'Noto Sans Thai', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+            letter-spacing: -0.01em;
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 6px;
+        }
+
+        /* Clean Card & Inputs */
+        .cmu-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05);
+        }
+
+        .cmu-input {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            color: #0f172a;
+            transition: all 0.15s ease-in-out;
+        }
+        .cmu-input:focus {
+            background-color: #ffffff;
+            border-color: #7e22ce;
+            box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.15);
+            outline: none;
+        }
+
+        .cmu-modal-backdrop {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        /* Official Report Document Styling */
+        .report-paper {
+            font-family: 'Google Sans', 'Google Sans Text', 'Noto Sans Thai Looped', 'Noto Sans Thai', 'Sarabun', sans-serif;
+            color: #000000;
+            line-height: 1.6;
+        }
+
+        /* Print styles: Fixed Multi-page Overflow & Zero Clipping */
+        @media print {
+            html, body {
+                background: white !important;
+                color: black !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                height: auto !important;
+                min-height: 100% !important;
+                overflow: visible !important;
+            }
+            .no-print, header, #mainGrid, footer, #toastContainer, #adminModal, #reportModalHeader, #reportModalButtons {
+                display: none !important;
+            }
+            #reportModal {
+                position: static !important;
+                display: block !important;
+                width: 100% !important;
+                height: auto !important;
+                max-height: none !important;
+                overflow: visible !important;
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                backdrop-filter: none !important;
+            }
+            #reportModalContent {
+                position: static !important;
+                display: block !important;
+                width: 100% !important;
+                height: auto !important;
+                max-height: none !important;
+                overflow: visible !important;
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .print-document-page {
+                width: 100% !important;
+                max-width: 100% !important;
+                height: auto !important;
+                overflow: visible !important;
+                padding: 10mm 15mm !important;
+                box-shadow: none !important;
+                border: none !important;
+                page-break-inside: auto !important;
+            }
+            .report-item {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased">
+
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer" class="fixed top-3 right-3 z-50 flex flex-col gap-2 max-w-xs sm:max-w-sm pointer-events-none no-print"></div>
+
+    <div id="mainApp" class="max-w-7xl mx-auto w-full px-3 sm:px-6 lg:px-8 py-3 sm:py-6 space-y-4 sm:space-y-6 no-print">
+
+        <!-- ================= TOP BANNER: องค์การนักศึกษามหาวิทยาลัยเชียงใหม่ ================= -->
+        <header class="bg-gradient-to-r from-slate-950 via-purple-950 to-slate-900 text-white rounded-xl sm:rounded-2xl p-3.5 sm:p-5 shadow-lg border-t-4 border-amber-500 relative overflow-hidden">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                
+                <!-- Left: Title & Emblem -->
+                <div class="flex items-center gap-3 w-full sm:w-auto">
+                    <div class="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 text-slate-950 flex items-center justify-center font-bold shadow-md shrink-0 border border-amber-300">
+                        <!-- CMU Student Organization Crest Icon -->
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h6m-6 0V11m6 0V11m-6 10v-5a1 1 0 011-1h4a1 1 0 011 1v5m-6 0h6"/>
+                        </svg>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <div class="flex flex-wrap items-center gap-1.5 text-[11px] font-semibold text-amber-300">
+                            <span class="bg-purple-900/90 text-purple-200 px-2.5 py-0.5 rounded-full border border-purple-500/40">
+                                องค์การนักศึกษามหาวิทยาลัยเชียงใหม่ (มช.)
+                            </span>
+                            <span id="quorumCompactBadge" class="bg-slate-900/90 text-amber-300 px-2.5 py-0.5 rounded-full border border-amber-500/40 font-mono">
+                                องค์ประชุมองค์การฯ: 0/0
+                            </span>
+                        </div>
+                        <h1 id="displayTitle" class="text-base sm:text-xl font-bold text-white tracking-tight leading-snug truncate mt-1">
+                            การประชุมองค์การนักศึกษามหาวิทยาลัยเชียงใหม่
+                        </h1>
+                        <p class="text-[11px] text-purple-200/90 flex items-center gap-1.5 mt-0.5">
+                            <span>🏛️ ประธานที่ประชุม: ประธานสภานักศึกษา</span>
+                            <span>•</span>
+                            <span>👥 ผู้เข้าร่วม 50 ท่าน: กก.บห.สภานักศึกษา (9) • กก.บห.ส.มช. (16) • นายกสโมสรคณะ/วิทยาลัย (22) • กก.หอพัก (3)</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right: Schedule & Actions -->
+                <div class="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto text-xs border-t sm:border-t-0 border-purple-900/80 pt-2 sm:pt-0">
+                    <div class="text-slate-300 text-[11px] leading-tight text-left sm:text-right">
+                        <div>📅 <span id="displayDateText" class="font-semibold text-white">กำลังโหลดกำหนดการ...</span></div>
+                        <div class="text-amber-300 mt-0.5">⏰ <span id="countdownText" class="font-mono">กำลังตรวจสอบเวลา...</span></div>
+                    </div>
+                    
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button onclick="openReportModal(event)" title="สรุปองค์ประชุม &amp; ออกรายงาน PDF" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow transition flex items-center gap-1.5 cursor-pointer border border-emerald-400/40">
+                            📄 <span class="hidden sm:inline">ออกรายงาน PDF</span>
+                        </button>
+                        <button onclick="toggleAdminModal(true)" title="จัดการลิงก์และรายชื่อ (ฝ่ายเลขาธิการ)" class="px-2.5 py-1.5 rounded-xl bg-purple-700 hover:bg-purple-600 text-white text-xs font-semibold shadow transition flex items-center gap-1 cursor-pointer border border-purple-500/40">
+                            ⚙️ <span class="hidden sm:inline">เครื่องมือเลขาฯ</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+
+        <!-- ================= MAIN CONTENT GRID (FORM ON LEFT, STATS & FEED ON RIGHT) ================= -->
+        <div id="mainGrid" class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+
+            <!-- ================= LEFT COLUMN: REGISTRATION FORM ================= -->
+            <div id="formSection" class="lg:col-span-5 space-y-4">
+                <div class="cmu-card rounded-xl sm:rounded-2xl p-4 sm:p-6 relative border-2 border-purple-600 shadow-md">
+                    
+                    <!-- Form Closed Overlay -->
+                    <div id="closedOverlay" class="hidden absolute inset-0 bg-white/95 backdrop-blur-md rounded-xl sm:rounded-2xl flex flex-col items-center justify-center p-6 z-20 text-center space-y-2">
+                        <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center border border-rose-200 text-2xl">
+                            🔒
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900">ปิดการรับคำตอบแล้ว</h3>
+                        <p class="text-xs text-slate-600 max-w-xs">
+                            การประชุมนี้ได้เลยกำหนดเวลาปิดรับคำตอบแล้ว (ระบบเวลา GMT+7)
+                        </p>
+                    </div>
+
+                    <!-- Header Label -->
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-200 mb-3 sm:mb-4">
+                        <h2 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            ✍️ แบบฟอร์มลงทะเบียนเข้าร่วมประชุม
+                        </h2>
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-800 border border-purple-200">
+                            เปิดรับคำตอบ
+                        </span>
+                    </div>
+
+                    <form id="mainForm" onsubmit="submitForm(event)" class="space-y-3 sm:space-y-4">
+                        
+                        <!-- 1. Member Organization Selection (4 Bodies, 50 Members) -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-800 mb-1.5">
+                                1. เลือกสังกัดองค์กรของคุณ *
+                            </label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-semibold">
+                                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-xl border border-purple-200 hover:bg-purple-50 transition bg-white shadow-2xs">
+                                    <input type="radio" name="memberType" value="คณะบริหารสภานักศึกษา" onchange="handleTypeChange()" class="accent-purple-700 w-4 h-4 cursor-pointer">
+                                    <span class="text-slate-900 leading-tight">🏛️ คณะบริหารสภานักศึกษา<br><span class="text-[10px] text-purple-700 font-normal">9 ตำแหน่ง (สภานักศึกษา)</span></span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-xl border border-indigo-200 hover:bg-indigo-50 transition bg-white shadow-2xs">
+                                    <input type="radio" name="memberType" value="คณะกรรมการบริหาร ส.มช." onchange="handleTypeChange()" class="accent-indigo-700 w-4 h-4 cursor-pointer">
+                                    <span class="text-slate-900 leading-tight">🏢 คณะกรรมการบริหาร ส.มช.<br><span class="text-[10px] text-indigo-700 font-normal">16 ตำแหน่ง (สโมสรนักศึกษา มช.)</span></span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-xl border border-sky-200 hover:bg-sky-50 transition bg-white shadow-2xs">
+                                    <input type="radio" name="memberType" value="นายกสโมสรคณะและวิทยาลัย" onchange="handleTypeChange()" class="accent-sky-700 w-4 h-4 cursor-pointer">
+                                    <span class="text-slate-900 leading-tight">🎓 นายกสโมสรคณะและวิทยาลัย<br><span class="text-[10px] text-sky-700 font-normal">22 ท่าน (คณะ/วิทยาลัย มช.)</span></span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer p-2 rounded-xl border border-emerald-200 hover:bg-emerald-50 transition bg-white shadow-2xs">
+                                    <input type="radio" name="memberType" value="คณะกรรมการหอพักนักศึกษา" onchange="handleTypeChange()" class="accent-emerald-700 w-4 h-4 cursor-pointer">
+                                    <span class="text-slate-900 leading-tight">🏠 คณะกรรมการหอพักนักศึกษา<br><span class="text-[10px] text-emerald-700 font-normal">3 ท่าน (กบห. หอพักนักศึกษา)</span></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 2. Seat Selection Dropdown -->
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label id="lblSeatSelect" class="block text-xs font-bold text-slate-800">
+                                    2. เลือกตำแหน่ง / สังกัด / รายชื่อของคุณ *
+                                </label>
+                            </div>
+                            <select id="fSeat" required disabled onchange="handleSeatSelectionChange()" class="w-full cmu-input px-3 py-2.5 rounded-xl text-sm font-medium transition cursor-pointer disabled:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed">
+                                <option value="" class="text-slate-400">-- กรุณาเลือกสังกัดองค์กรในข้อ 1 ก่อน --</option>
+                            </select>
+                            <p id="seatNotice" class="text-[10px] text-slate-500 mt-1"></p>
+                        </div>
+
+                        <!-- 3. Attendance Status (4 Choices as specifically requested) -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-800 mb-1.5">
+                                3. สถานะการเข้าร่วมประชุม *
+                            </label>
+                            <select id="fStatus" required onchange="toggleAttendanceFields()" class="w-full cmu-input px-3 py-2.5 rounded-xl text-sm font-medium transition cursor-pointer border-purple-300">
+                                <option value="" class="text-slate-400">-- เลือกสถานะการเข้าร่วมประชุม --</option>
+                                <option value="Onsite" class="text-emerald-700 font-semibold">1. สะดวกเข้าร่วมประชุม รูปแบบ Onsite (เสนอญัตติได้)</option>
+                                <option value="Online" class="text-sky-700 font-semibold">2. สะดวกเข้าร่วมประชุม รูปแบบ Online (เสนอญัตติได้)</option>
+                                <option value="มอบหมายผู้แทน" class="text-amber-800 font-semibold">3. ไม่สะดวกเข้าร่วมประชุม และมอบหมายผู้แทน (เสนอญัตติได้)</option>
+                                <option value="ไม่สะดวกเข้าร่วมประชุม" class="text-rose-700 font-semibold">4. ไม่สะดวกเข้าร่วมประชุม และไม่มอบหมายผู้แทน</option>
+                            </select>
+                            <p id="statusNotice" class="text-[11px] text-slate-500 mt-1"></p>
+                        </div>
+
+                        <!-- ================= SECTION 3A: REPRESENTATIVE APPOINTMENT (Conditional upon "ไม่สะดวกเข้าร่วมประชุม และมอบหมายผู้แทน") ================= -->
+                        <div id="boxRepresentative" class="hidden transition-all duration-300 p-3.5 bg-amber-50/90 border border-amber-300 rounded-xl space-y-3">
+                            
+                            <div class="flex items-center justify-between border-b border-amber-200 pb-1.5">
+                                <span class="text-xs font-bold text-amber-950 flex items-center gap-1.5">
+                                    <span>🤝</span>
+                                    <span>ข้อมูลการมอบหมายผู้แทน</span>
+                                </span>
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-200 text-amber-900">
+                                    มีผลต่อรายงานการประชุม
+                                </span>
+                            </div>
+
+                            <p class="text-[11px] text-amber-900 font-medium">
+                                📌 <strong>คำชี้แจง:</strong> กรณีมอบหมายผู้แทน กรุณาระบุ ชื่อ-สกุล-ตำแหน่ง ของผู้แทนให้ชัดเจน เพื่อบันทึกลงในรายงานการประชุมอย่างเป็นทางการ
+                            </p>
+
+                            <!-- Special Rule Notice for Student Council (สภานักศึกษา) -->
+                            <div id="boxCouncilRepNotice" class="hidden text-[11px] bg-white/95 p-2.5 rounded-lg border border-amber-300 text-amber-950 leading-relaxed space-y-1.5">
+                                <p class="font-bold text-rose-700">⚠️ ระเบียบข้อบังคับสำหรับสภานักศึกษา:</p>
+                                <p class="text-slate-700">
+                                    สมาชิกสภานักศึกษา<strong>ไม่สามารถส่งผู้แทนได้</strong> เว้นแต่ได้รับอนุญาตเป็นกรณีพิเศษจากประธานที่ประชุม (ประธานสภานักศึกษา) ซึ่งประธานจะนำเข้าสู่ที่ประชุมเพื่อขอมติว่าจะมีสิทธิออกเสียงหรือไม่
+                                </p>
+                                <label class="flex items-center gap-2 mt-1.5 pt-1 border-t border-amber-200 cursor-pointer">
+                                    <input type="checkbox" id="fCouncilRepAllowed" onchange="toggleCouncilRepState()" class="accent-amber-700 w-4 h-4 cursor-pointer">
+                                    <span class="text-xs font-bold text-amber-950">ได้รับอนุญาตเป็นกรณีพิเศษจากประธานที่ประชุมแล้ว</span>
+                                </label>
+                            </div>
+
+                            <!-- Representative Detailed Input Fields -->
+                            <div id="boxRepInputs" class="space-y-2.5">
+                                <div>
+                                    <label class="block text-xs font-bold text-amber-950 mb-1">
+                                        ชื่อ-นามสกุล ของผู้แทน *
+                                    </label>
+                                    <input type="text" id="fRepName" class="w-full cmu-input px-3 py-2 rounded-xl text-xs bg-white" placeholder="ระบุชื่อ-นามสกุล ของผู้แทนที่ได้รับการมอบหมาย">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-amber-950 mb-1">
+                                        ตำแหน่งในสังกัดของผู้แทน *
+                                    </label>
+                                    <input type="text" id="fRepPosition" class="w-full cmu-input px-3 py-2 rounded-xl text-xs bg-white" placeholder="เช่น อุปนายกสโมสรนักศึกษาฯ, กรรมการฝ่ายบริหาร, เลขานุการสโมสรฯ">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-amber-950 mb-1">
+                                        ผู้ที่มอบหมาย (ผู้แทน) สะดวกเข้าร่วมประชุมรูปแบบใด *
+                                    </label>
+                                    <select id="fRepMode" class="w-full cmu-input px-3 py-2 rounded-xl text-xs bg-white font-medium">
+                                        <option value="Onsite">📍 รูปแบบ Onsite (เข้าร่วม ณ ห้องประชุม)</option>
+                                        <option value="Online">💻 รูปแบบ Online (เข้าร่วมผ่านระบบสื่ออิเล็กทรอนิกส์)</option>
+                                    </select>
+                                </div>
+
+                                <div class="bg-amber-100/80 p-2 rounded-lg text-[10px] text-amber-900 border border-amber-300/80 flex items-center gap-1.5">
+                                    <span>💡</span>
+                                    <span><strong>สิทธิ์ในการประชุม:</strong> ผู้แทนที่ได้รับมอบหมายสามารถปฏิบัติหน้าที่ นับเป็นองค์ประชุม และ<strong>สามารถเสนอญัตติได้ด้วย</strong></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- ================= SECTION 4: MOTION PROPOSAL ================= -->
+                        <div id="boxMotionSection" class="transition-all duration-300">
+                            <label id="lblMotionPrompt" class="block text-xs font-bold text-slate-800 mb-1">
+                                4. เสนอญัตติเพื่ออภิปรายหรือไม่ (เสนอญัตติได้) *
+                            </label>
+                            <select id="fHasMotion" required onchange="toggleMotionFields()" class="w-full cmu-input px-3 py-2.5 rounded-xl text-sm transition cursor-pointer">
+                                <option value="ไม่มี" class="text-slate-700">ไม่มีญัตติเสนอ (No Motion)</option>
+                                <option value="มี" class="text-purple-900 font-semibold">มีญัตติต้องการเสนอ (Submit Motion)</option>
+                            </select>
+                        </div>
+
+                        <!-- Motion Detail (Conditional upon fHasMotion === "มี") -->
+                        <div id="boxMotion" class="hidden transition-all duration-300">
+                            <label id="lblMotionDetail" class="block text-xs font-bold text-purple-900 mb-1">
+                                รายละเอียดญัตติที่เสนอ *
+                            </label>
+                            <textarea id="fMotionDetail" rows="2" class="w-full cmu-input px-3 py-2 rounded-xl text-xs border-purple-300 focus:border-purple-600 placeholder-slate-400" placeholder="ระบุหัวข้อญัตติ เหตุผลความจำเป็น และรายละเอียดโดยสังเขป..."></textarea>
+                        </div>
+
+                        <!-- 5. Additional Remarks -->
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">
+                                หมายเหตุเพิ่มเติม (ถ้ามี)
+                            </label>
+                            <textarea id="fRemark" rows="1" class="w-full cmu-input px-3 py-1.5 rounded-xl text-xs placeholder-slate-400" placeholder="เช่น ขอเข้าสายเนื่องจากติดภารกิจการเรียน..."></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" id="btnSubmit" class="w-full mt-2 bg-gradient-to-r from-purple-900 to-indigo-950 hover:from-purple-950 hover:to-slate-900 text-white font-bold py-3 rounded-xl text-sm shadow-md transition-all active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer border border-purple-700">
+                            <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span id="btnText" class="text-base">ยืนยันและส่งข้อมูลลงทะเบียน</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ================= RIGHT COLUMN: STATS & LIVE FEED DASHBOARD ================= -->
+            <div class="lg:col-span-7 space-y-4 sm:space-y-6">
+
+                <!-- QUORUM & COMPREHENSIVE STATS SUMMARY CARD -->
+                <div class="cmu-card rounded-xl p-4 sm:p-5 space-y-3.5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                            📊 สรุปองค์ประชุมและยอดจัดเลี้ยง (Live Quorum)
+                        </h3>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openReportModal(event)" class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-300 text-xs font-bold transition flex items-center gap-1 cursor-pointer">
+                                📄 รายงานสรุป PDF
+                            </button>
+                            <span id="quorumBadge" class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-300">
+                                ⏳ กำลังคำนวณองค์ประชุม...
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Quorum Progress Bar: Counts Titular Members + Valid Representatives -->
+                    <div class="space-y-1.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <div class="flex justify-between text-xs font-semibold text-slate-800">
+                            <span>
+                                องค์ประชุมองค์การนักศึกษา: <strong id="quorumCounter" class="text-purple-900 font-mono text-sm">0/0</strong>
+                                <span class="text-[10px] text-slate-500 font-normal ml-1">(นับรวมผู้มาเอง + ผู้แทนที่ได้รับมอบหมาย)</span>
+                            </span>
+                            <span id="quorumThresholdBadge" class="text-amber-900 bg-amber-100 px-2 py-0.5 rounded border border-amber-300 text-[11px] font-bold">
+                                เกณฑ์บังคับ > 50%
+                            </span>
+                        </div>
+                        <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden border border-slate-300">
+                            <div id="quorumProgressBar" class="bg-gradient-to-r from-amber-500 to-purple-600 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- 4-Box Metrics Grid (4 Bodies: Council 9, SMC 16, Faculty 22, Dorm 3 = 50 Members) -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-center">
+                        
+                        <!-- Box 1: สภานักศึกษา (9) -->
+                        <div class="bg-purple-50/80 p-2.5 rounded-xl border border-purple-200 text-left">
+                            <div class="text-[11px] font-bold text-purple-900 mb-1 flex items-center justify-between">
+                                <span>🏛️ สภานักศึกษา</span>
+                                <span id="cntCouncilTotal" class="font-mono text-purple-700 font-bold">0/9</span>
+                            </div>
+                            <div class="grid grid-cols-3 gap-1 text-center text-xs">
+                                <div class="bg-white p-1 rounded border border-purple-100">
+                                    <span class="text-[9px] text-emerald-700 block">Onsite</span>
+                                    <span id="councilOnsite" class="font-bold text-emerald-800 font-mono">0</span>
+                                </div>
+                                <div class="bg-white p-1 rounded border border-purple-100">
+                                    <span class="text-[9px] text-sky-700 block">Online</span>
+                                    <span id="councilOnline" class="font-bold text-sky-800 font-mono">0</span>
+                                </div>
+                                <div class="bg-white p-1 rounded border border-purple-100">
+                                    <span class="text-[9px] text-amber-800 block">ผู้แทน</span>
+                                    <span id="councilRepCount" class="font-bold text-amber-800 font-mono">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Box 2: คณะกรรมการบริหาร ส.มช. (16) -->
+                        <div class="bg-indigo-50/80 p-2.5 rounded-xl border border-indigo-200 text-left">
+                            <div class="text-[11px] font-bold text-indigo-900 mb-1 flex items-center justify-between">
+                                <span>🏢 กก.บห. ส.มช.</span>
+                                <span id="cntSmcTotal" class="font-mono text-indigo-700 font-bold">0/16</span>
+                            </div>
+                            <div class="grid grid-cols-3 gap-1 text-center text-xs">
+                                <div class="bg-white p-1 rounded border border-indigo-100">
+                                    <span class="text-[9px] text-emerald-700 block">Onsite</span>
+                                    <span id="smcOnsite" class="font-bold text-emerald-800 font-mono">0</span>
+                                </div>
+                                <div class="bg-white p-1 rounded border border-indigo-100">
+                                    <span class="text-[9px] text-sky-700 block">Online</span>
+                                    <span id="smcOnline" class="font-bold text-sky-800 font-mono">0</span>
+                                </div>
+                                <div class="bg-white p-1 rounded border border-indigo-100">
+                                    <span class="text-[9px] text-amber-800 block">ผู้แทน</span>
+                                    <span id="smcRepCount" class="font-bold text-amber-800 font-mono">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Box 3: นายกสโมสรคณะและวิทยาลัย (22) -->
+                        <div class="bg-sky-50/80 p-2.5 rounded-xl border border-sky-200 text-left">
+                            <div class="text-[11px] font-bold text-sky-900 mb-1 flex items-center justify-between">
+                                <span>🎓 นายกสโมสรคณะฯ</span>
+                                <span id="cntFacultyTotal" class="font-mono text-sky-700 font-bold">0/22</span>
+                            </div>
+                            <div class="grid grid-cols-3 gap-1 text-center text-xs">
+                                <div class="bg-white p-1 rounded border border-sky-100">
+                                    <span class="text-[9px] text-emerald-700 block">Onsite</span>
+                                    <span id="facultyOnsite" class="font-bold text-emerald-800 font-mono">0</span>
+                                </div>
+                                <div class="bg-white p-1 rounded border border-sky-100">
+                                    <span class="text-[9px] text-sky-700 block">Online</span>
+                                    <span id="facultyOnline" class="font-bold text-sky-800 font-mono">0</span>
+                                </div>
+                                <div class="bg-white p-1 rounded border border-sky-100">
+                                    <span class="text-[9px] text-amber-800 block">ผู้แทน</span>
+                                    <span id="facultyRepCount" class="font-bold text-amber-800 font-mono">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Box 4: คณะกรรมการหอพักนักศึกษา (3) -->
+                        <div class="bg-emerald-50/80 p-2.5 rounded-xl border border-emerald-200 text-left">
+                            <div class="text-[11px] font-bold text-emerald-900 mb-1 flex items-center justify-between">
+                                <span>🏠 กก.หอพัก</span>
+                                <span id="cntDormTotal" class="font-mono text-emerald-700 font-bold">0/3</span>
+                            </div>
+                            <div class="grid grid-cols-3 gap-1 text-center text-xs">
+                                <div class="bg-white p-1 rounded border border-emerald-100">
+                                    <span class="text-[9px] text-emerald-700 block">Onsite</span>
+                                    <span id="dormOnsite" class="font-bold text-emerald-800 font-mono">0</span>
+                                </div>
+                                <div class="bg-white p-1 rounded border border-emerald-100">
+                                    <span class="text-[9px] text-sky-700 block">Online</span>
+                                    <span id="dormOnline" class="font-bold text-sky-800 font-mono">0</span>
+                                </div>
+                                <div class="bg-white p-1 rounded border border-emerald-100">
+                                    <span class="text-[9px] text-amber-800 block">ผู้แทน</span>
+                                    <span id="dormRepCount" class="font-bold text-amber-800 font-mono">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Summary Strip: Catering, Absent, and Motions -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-xs">
+                        <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-300 flex items-center justify-between shadow-2xs">
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-lg">🍱</span>
+                                <div>
+                                    <span class="text-[11px] font-bold text-amber-950 block">ยอดสั่งอาหารจัดเลี้ยง</span>
+                                    <span class="text-[9px] text-amber-800">Onsite สมาชิก + ผู้แทน</span>
+                                </div>
+                            </div>
+                            <div class="font-mono font-extrabold text-amber-950 text-xl">
+                                <span id="totalCateringCount">0</span> <span class="text-xs font-bold text-amber-900">ชุด</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-rose-50 p-2.5 rounded-xl border border-rose-200 flex items-center justify-between shadow-2xs">
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-lg">❌</span>
+                                <div>
+                                    <span class="text-[11px] font-bold text-rose-950 block">ไม่สะดวกเข้าร่วม</span>
+                                    <span class="text-[9px] text-rose-700">ไม่มอบหมายผู้แทน</span>
+                                </div>
+                            </div>
+                            <div class="font-mono font-extrabold text-rose-800 text-xl">
+                                <span id="totalAbsentCount">0</span> <span class="text-xs font-bold text-rose-700">คน</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-purple-50 p-2.5 rounded-xl border border-purple-200 flex items-center justify-between shadow-2xs">
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-lg">📌</span>
+                                <div>
+                                    <span class="text-[11px] font-bold text-purple-950 block">ญัตติเสนอในที่ประชุม</span>
+                                    <span class="text-[9px] text-purple-700">สมาชิก &amp; ผู้แทน</span>
+                                </div>
+                            </div>
+                            <div class="font-mono font-extrabold text-purple-900 text-xl">
+                                <span id="totalMotionCount">0</span> <span class="text-xs font-bold text-purple-800">เรื่อง</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LIVE DASHBOARD & FILTER SECTION -->
+                <div class="cmu-card rounded-xl sm:rounded-2xl p-4 sm:p-6 min-h-[440px] flex flex-col shadow-sm">
+                    
+                    <!-- Dashboard Header & Search -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-3 border-b border-slate-200">
+                        <div>
+                            <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                                📋 รายการตอบรับและวาระการประชุม (Live Feed)
+                            </h2>
+                        </div>
+
+                        <!-- Search Bar -->
+                        <div class="relative w-full sm:w-60">
+                            <input type="text" id="searchInput" onkeyup="filterDashboard()" placeholder="ค้นหาชื่อ, ตำแหน่ง, ผู้แทน, ญัตติ..." class="w-full cmu-input pl-8 pr-2.5 py-1.5 rounded-lg text-xs outline-none">
+                            <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Filter Buttons Row 1: Groups & Quick Name-tag Action -->
+                    <div class="py-2.5 border-b border-slate-200 space-y-2">
+                        <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+                            <div class="flex items-center gap-1.5 overflow-x-auto pb-0.5">
+                                <span class="text-[11px] font-bold text-slate-500 shrink-0">กลุ่มองค์กร:</span>
+                                <button onclick="setGroupFilter('ALL')" id="groupALL" class="group-btn px-2.5 py-1 rounded-lg bg-purple-900 text-white font-bold transition shrink-0 cursor-pointer shadow-2xs">
+                                    รวมทั้งหมด (50)
+                                </button>
+                                <button onclick="setGroupFilter('COUNCIL')" id="groupCOUNCIL" class="group-btn px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-semibold transition shrink-0 cursor-pointer flex items-center gap-1 border border-slate-200">
+                                    🏛️ สภาฯ <span id="cntFilterCouncil" class="text-[10px] bg-slate-200 text-slate-800 px-1.5 py-0.2 rounded-full font-mono">0</span>
+                                </button>
+                                <button onclick="setGroupFilter('SMC')" id="groupSMC" class="group-btn px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-semibold transition shrink-0 cursor-pointer flex items-center gap-1 border border-slate-200">
+                                    🏢 ส.มช. <span id="cntFilterSmc" class="text-[10px] bg-slate-200 text-slate-800 px-1.5 py-0.2 rounded-full font-mono">0</span>
+                                </button>
+                                <button onclick="setGroupFilter('FACULTY')" id="groupFACULTY" class="group-btn px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-semibold transition shrink-0 cursor-pointer flex items-center gap-1 border border-slate-200">
+                                    🎓 สโมสรคณะฯ <span id="cntFilterFaculty" class="text-[10px] bg-slate-200 text-slate-800 px-1.5 py-0.2 rounded-full font-mono">0</span>
+                                </button>
+                                <button onclick="setGroupFilter('DORM')" id="groupDORM" class="group-btn px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-semibold transition shrink-0 cursor-pointer flex items-center gap-1 border border-slate-200">
+                                    🏠 กก.หอพัก <span id="cntFilterDorm" class="text-[10px] bg-slate-200 text-slate-800 px-1.5 py-0.2 rounded-full font-mono">0</span>
+                                </button>
+                            </div>
+
+                            <!-- Room Setup Shortcut: Name Tags for Onsite Attendees (Members + Reps) -->
+                            <button onclick="quickOnsiteSeatsPreset()" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold transition shrink-0 cursor-pointer flex items-center gap-1.5 shadow-2xs">
+                                🏷️ ป้ายชื่อที่นั่ง Onsite
+                            </button>
+                        </div>
+
+                        <!-- Filter Buttons Row 2: Status Tabs (Updated to match 4 options) -->
+                        <div class="flex items-center gap-1 overflow-x-auto text-xs pt-1 border-t border-slate-100">
+                            <span class="text-[11px] font-bold text-slate-500 shrink-0 mr-1">สถานะ:</span>
+                            <button onclick="setTabFilter('ALL')" id="tabALL" class="tab-btn px-2.5 py-1 rounded-md bg-purple-900 text-white font-bold transition shrink-0 cursor-pointer">
+                                ทั้งหมด
+                            </button>
+                            <button onclick="setTabFilter('Onsite')" id="tabOnsite" class="tab-btn px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium transition shrink-0 cursor-pointer">
+                                📍 Onsite
+                            </button>
+                            <button onclick="setTabFilter('Online')" id="tabOnline" class="tab-btn px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium transition shrink-0 cursor-pointer">
+                                💻 Online
+                            </button>
+                            <button onclick="setTabFilter('REP')" id="tabREP" class="tab-btn px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium transition shrink-0 cursor-pointer">
+                                🤝 มอบหมายผู้แทน
+                            </button>
+                            <button onclick="setTabFilter('ไม่สะดวก')" id="tabLeave" class="tab-btn px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium transition shrink-0 cursor-pointer">
+                                ❌ ไม่สะดวกเข้าร่วม
+                            </button>
+                            <button onclick="setTabFilter('Motion')" id="tabMotion" class="tab-btn px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium transition shrink-0 cursor-pointer">
+                                📌 มีญัตติ
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Live Data List Container -->
+                    <div id="dataList" class="space-y-2.5 overflow-y-auto max-h-[400px] pr-1 mt-1 flex-1">
+                        <div class="flex flex-col items-center justify-center py-12 text-slate-400 space-y-2">
+                            <svg class="w-6 h-6 animate-spin text-purple-700" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <p class="text-xs font-medium text-slate-500">กำลังเชื่อมต่อข้อมูลเรียลไทม์...</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="mt-6 border-t border-slate-200 bg-white py-4 text-center text-[11px] text-slate-500 no-print">
+        <p>© 2026 องค์การนักศึกษามหาวิทยาลัยเชียงใหม่ • ระบบตอบรับ e-Meeting</p>
+    </footer>
+
+    <!-- ================= SECRETARY ADMIN MODAL (ออกลิงก์ & จัดการรายชื่อ) ================= -->
+    <div id="adminModal" class="fixed inset-0 cmu-modal-backdrop z-50 hidden flex items-center justify-center p-3 transition-all duration-300 no-print">
+        <div class="bg-white rounded-2xl max-w-xl w-full p-5 sm:p-6 shadow-2xl border border-slate-200 space-y-4 relative max-h-[95vh] overflow-y-auto">
+            <button onclick="toggleAdminModal(false)" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-1 rounded-lg hover:bg-slate-100 transition cursor-pointer">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+
+            <div class="flex items-center gap-2.5 border-b border-slate-100 pb-3">
+                <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center border border-purple-200 font-bold text-base">
+                    ⚙️
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-slate-900">เครื่องมือฝ่ายเลขาธิการการประชุม</h3>
+                    <p class="text-[11px] text-slate-500">ออกลิงก์การประชุม &amp; จัดการรายชื่อโควตาผู้เข้าร่วม (เวลา GMT+7)</p>
+                </div>
+            </div>
+
+            <!-- Tab Navigation inside Admin Modal -->
+            <div class="flex border-b border-slate-200 text-xs font-semibold gap-2">
+                <button type="button" onclick="switchAdminTab('linkGen')" id="admTabLinkGen" class="px-3 py-2 border-b-2 border-purple-700 text-purple-900 font-bold cursor-pointer">
+                    🔗 ออกลิงก์การประชุม
+                </button>
+                <button type="button" onclick="switchAdminTab('roster')" id="admTabRoster" class="px-3 py-2 border-b-2 border-transparent text-slate-500 hover:text-slate-800 cursor-pointer">
+                    👥 จัดการรายชื่อผู้เข้าร่วม (ส่งชื่อภายหลัง)
+                </button>
+            </div>
+
+            <!-- Tab 1: Link Generator -->
+            <div id="admSectionLinkGen" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">แม่แบบชื่อการประชุมด่วน (Presets)</label>
+                    <div class="flex flex-wrap gap-1.5 text-xs">
+                        <button type="button" onclick="setPresetTitle('การประชุมองค์การนักศึกษามหาวิทยาลัยเชียงใหม่ สมัยสามัญ ครั้งที่ 1/2569')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 cursor-pointer text-[11px]">
+                            สามัญ ครั้งที่ 1/2569
+                        </button>
+                        <button type="button" onclick="setPresetTitle('การประชุมองค์การนักศึกษามหาวิทยาลัยเชียงใหม่ สมัยวิสามัญ ครั้งที่ 1/2569')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 cursor-pointer text-[11px]">
+                            วิสามัญ ครั้งที่ 1/2569
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">ชื่อ/ครั้งที่การประชุม *</label>
+                    <input type="text" id="genTitle" class="w-full cmu-input px-3 py-2 rounded-xl text-xs" placeholder="เช่น การประชุมองค์การนักศึกษามหาวิทยาลัยเชียงใหม่ สมัยสามัญ ครั้งที่ 1/2569">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">กำหนดการประชุม (ข้อความแสดงผล) *</label>
+                    <input type="text" id="genDateText" class="w-full cmu-input px-3 py-2 rounded-xl text-xs" placeholder="เช่น วันศุกร์ที่ 14 พ.ย. 2569 เวลา 17.00-21.00 น. ณ ห้องประชุมองค์การนักศึกษา">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">เวลาปิดระบบอัตโนมัติ (Deadline - เวลา GMT+7) *</label>
+                    <input type="datetime-local" id="genDeadline" class="w-full cmu-input px-3 py-2 rounded-xl text-xs">
+                </div>
+
+                <div class="pt-1">
+                    <button type="button" onclick="generateLink()" class="w-full bg-purple-700 hover:bg-purple-800 text-white font-bold py-2.5 rounded-xl text-xs shadow transition cursor-pointer">
+                        ⚡ สร้างลิงก์การประชุม
+                    </button>
+                </div>
+
+                <!-- Result Box -->
+                <div id="resultLinkBox" class="hidden mt-2 p-2.5 bg-slate-50 border border-slate-300 rounded-xl space-y-1.5">
+                    <label class="block text-[10px] font-semibold text-slate-700">ลิงก์การประชุมที่สร้างเสร็จแล้ว:</label>
+                    <div class="flex items-center gap-1.5">
+                        <input type="text" id="resultLink" class="w-full bg-white text-xs text-purple-900 px-2.5 py-1.5 rounded-lg outline-none font-mono border border-slate-300" readonly>
+                        <button type="button" onclick="copyLink()" class="shrink-0 bg-emerald-700 hover:bg-emerald-800 text-white px-2.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1 shadow cursor-pointer">
+                            📋 คัดลอก
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Roster Manager (4 Bodies, 50 Members) -->
+            <div id="admSectionRoster" class="hidden space-y-3">
+                <div class="bg-purple-50 p-2.5 rounded-xl border border-purple-200 text-[11px] text-purple-900">
+                    💡 <strong>คำแนะนำ:</strong> เมื่อมีรายชื่อจริงจากแต่ละองค์กร ท่านสามารถวางรายชื่อใหม่ (1 บรรทัด ต่อ 1 ท่าน/ตำแหน่ง) แล้วกด <strong>"บันทึกรายชื่อใหม่"</strong> ระบบจะอัปเดตตัวเลือกในฟอร์มและองค์ประชุมทันที
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-800 mb-1">
+                            1. คณะบริหารสภานักศึกษา (9 ตำแหน่ง)
+                        </label>
+                        <textarea id="txtRosterCouncil" rows="4" class="w-full cmu-input p-2.5 rounded-xl text-xs font-mono" placeholder="วางรายชื่อสภานักศึกษา..."></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-800 mb-1">
+                            2. คณะกรรมการบริหาร ส.มช. (16 ตำแหน่ง)
+                        </label>
+                        <textarea id="txtRosterSmc" rows="4" class="w-full cmu-input p-2.5 rounded-xl text-xs font-mono" placeholder="วางรายชื่อ กก.บห. ส.มช...."></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-800 mb-1">
+                            3. นายกสโมสรคณะและวิทยาลัย (22 ท่าน)
+                        </label>
+                        <textarea id="txtRosterFaculty" rows="4" class="w-full cmu-input p-2.5 rounded-xl text-xs font-mono" placeholder="วางรายชื่อนายกสโมสรคณะ/วิทยาลัย..."></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-800 mb-1">
+                            4. คณะกรรมการหอพักนักศึกษา (3 ท่าน)
+                        </label>
+                        <textarea id="txtRosterDorm" rows="4" class="w-full cmu-input p-2.5 rounded-xl text-xs font-mono" placeholder="วางรายชื่อคณะกรรมการหอพักนักศึกษา..."></textarea>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 pt-1">
+                    <button type="button" onclick="saveCustomRosters()" class="flex-1 bg-purple-700 hover:bg-purple-800 text-white font-bold py-2 rounded-xl text-xs shadow transition cursor-pointer">
+                        💾 บันทึกรายชื่อใหม่
+                    </button>
+                    <button type="button" onclick="resetDefaultRosters()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs border border-slate-300 transition cursor-pointer">
+                        🔄 คืนค่าเริ่มต้น (50 ตำแหน่ง)
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= OFFICIAL PDF REPORT PREVIEW MODAL ================= -->
+    <div id="reportModal" class="fixed inset-0 cmu-modal-backdrop z-50 hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto transition-all duration-300">
+        <div id="reportModalContent" class="bg-white rounded-2xl max-w-4xl w-full p-4 sm:p-8 shadow-2xl border border-slate-300 space-y-4 relative my-auto max-h-[95vh] overflow-y-auto">
+            
+            <!-- Modal Actions Bar (hidden on print) -->
+            <div id="reportModalHeader" class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-3 border-b border-slate-200 no-print">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">📄</span>
+                    <div>
+                        <h3 class="text-base font-bold text-slate-900">รายงานสรุปสถิติองค์ประชุมอย่างเป็นทางการ (Official Summary Report)</h3>
+                        <p class="text-[11px] text-slate-500">องค์การนักศึกษามหาวิทยาลัยเชียงใหม่ (CMU Student Organization)</p>
+                    </div>
+                </div>
+
+                <div id="reportModalButtons" class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                    <button onclick="triggerPrint(event)" class="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-md transition flex items-center gap-1.5 cursor-pointer border border-emerald-600">
+                        🖨️ พิมพ์ / บันทึกเป็น PDF
+                    </button>
+                    <button onclick="closeReportModal()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition cursor-pointer">
+                        ❌ ปิด
+                    </button>
+                </div>
+            </div>
+
+            <!-- OFFICIAL DOCUMENT PAPER PREVIEW -->
+            <div id="printReportTemplate" class="print-document-page report-paper bg-white p-4 sm:p-8 text-black text-sm max-w-3xl mx-auto space-y-4">
+                
+                <!-- Official Header Text -->
+                <div class="text-center border-b-2 border-black pb-3 report-item space-y-1">
+                    <div class="font-bold text-lg sm:text-xl text-black">องค์การนักศึกษามหาวิทยาลัยเชียงใหม่</div>
+                    <div class="text-xs sm:text-sm text-black">ร่วมกับ สภานักศึกษามหาวิทยาลัยเชียงใหม่ (ประธานที่ประชุม)</div>
+                    <div class="text-xs text-slate-600">สำนักงานองค์การนักศึกษา อาคารกิจกรรมนักศึกษา มหาวิทยาลัยเชียงใหม่</div>
+                </div>
+
+                <!-- Document Title -->
+                <div class="text-center font-bold text-base sm:text-lg pt-2 pb-2 report-item">
+                    <span id="reportDocTitle">สถิติการตอบรับเข้าร่วมการประชุมองค์การนักศึกษา...</span>
+                </div>
+
+                <!-- Report Content Container -->
+                <div id="reportDocBody" class="space-y-4 text-sm font-normal text-black leading-relaxed">
+                    <p class="text-center text-slate-400 py-8">กำลังคำนวณข้อมูลรายงานสรุป...</p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= APPLICATION JAVASCRIPT ================= -->
+    <script>
+        /**
+         * API URL for Google Apps Script Web App
+         * (If left empty or if fetch fails, the app automatically runs on resilient LocalStorage demo mode)
+         */
+        const API_URL = "https://script.google.com/macros/s/AKfycbxh9UoPXpDoZ7WrPCzYUqV99GGpDnmru1NFXVRdfCcWQaUYn4OarMa_4QZHnXEvhuat/exec";
+        
+        let currentMeetingTitle = "";
+        let deadlineTime = null;
+        let cachedData = [];
+        let activeTab = "ALL";
+        let activeGroup = "ALL"; // 'ALL', 'COUNCIL', 'SMC', 'FACULTY', 'DORM'
+
+        /**
+         * 1. คณะบริหารสภานักศึกษา (9 ตำแหน่ง)
+         * รายชื่อจริงพร้อมตำแหน่งทางการ (ไม่ระบุรหัสนักศึกษาและชื่อเล่นตามระเบียบ PDPA)
+         */
+        const defaultCouncilList = [
+            "1. วัชรายุทธ ซึมทราย (ประธานสภานักศึกษามหาวิทยาลัยเชียงใหม่)",
+            "2. ศุภกฤต พรหมมา (รองประธานสภานักศึกษามหาวิทยาลัยเชียงใหม่ คนที่ 1)",
+            "3. ภราดร เสมอใจ (รองประธานสภานักศึกษามหาวิทยาลัยเชียงใหม่ คนที่ 2)",
+            "4. วิภาวรรณ อัยยะกา (ประธานกรรมมาธิการพิจารณาโครงงานและงบประมาณ)",
+            "5. ภาคิไน เอี่ยมอำไพ (ประธานกรรมาธิการฝ่ายประกันคุณภาพ ติดตาม และประเมินผล)",
+            "6. แทนคุณ จันทร์ลิ้ม (ประธานกรรมาธิการฝ่ายรับฟังความคิดเห็น)",
+            "7. ฐาณิชญาณ์ รักษาแก้ว (หัวหน้าฝ่ายประชาสัมพันธ์)",
+            "8. โสภา อุษณีย์วิสุทธิ์ (หัวหน้าฝ่ายเลขานุการ)",
+            "9. ตุลยวัฒน์ ฉางวางปราง (หัวหน้าฝ่ายธุรการและประสานงาน)"
+        ];
+
+        /**
+         * 2. คณะกรรมการบริหาร ส.มช. (16 ตำแหน่ง)
+         * รายชื่อจริงพร้อมตำแหน่งทางการ (ไม่ระบุรหัสนักศึกษาและชื่อเล่นตามระเบียบ PDPA)
+         */
+        const defaultSmcList = [
+            "1. ลิมปพัฒน์ เอี่ยมสอาด (นายกสโมสรนักศึกษามหาวิทยาลัยเชียงใหม่)",
+            "2. นันท์นพิน ส่งชื่น (รองนายกสโมสรนักศึกษามหาวิทยาลัยเชียงใหม่ คนที่ 1)",
+            "3. บดินทร์ธร เสนพรัตน์ (รองนายกสโมสรนักศึกษามหาวิทยาลัยเชียงใหม่ คนที่ 2)",
+            "4. เกียรติศักดิ์ นิลวิจิตร์ (รองนายกสโมสรนักศึกษามหาวิทยาลัยเชียงใหม่ คนที่ 3)",
+            "5. ศิรายุทธ์ สุดจิตร (เลขานุการ สโมสรนักศึกษามหาวิทยาลัยเชียงใหม่)",
+            "6. พัณณิตา องอาจทวีชัย (เหรัญญิก สโมสรนักศึกษามหาวิทยาลัยเชียงใหม่)",
+            "7. ธนวัฒน์ จันทร์ศิริ (ผู้ช่วยนายกสโมสรนักศึกษารับผิดชอบงานการเงินและทรัพย์สิน)",
+            "8. ธงไชย ศิริโสภา (ผู้ช่วยนายกสโมสรนักศึกษารับผิดชอบงานประชาสัมพันธ์และสารสนเทศ)",
+            "9. ธัชนนท์ ใหม่ดี (ผู้ช่วยนายกสโมสรนักศึกษารับผิดชอบงานโสตทัศนูปกรณ์และสถานที่)",
+            "10. ปาลิดา แก้วศิริ (ผู้ช่วยนายกสโมสรนักศึกษารับผิดชอบงานสวัสดิการ)",
+            "11. ธีราพร วิวัฒน์อรรถกุล (ผู้ช่วยนายกสโมสรนักศึกษารับผิดชอบงานวิเทศสัมพันธ์ และมวลชนสัมพันธ์)",
+            "12. พงศธร นิลตะศักดิ์ (ประธานกรรมการฝ่ายกีฬา)",
+            "13. สารวดี จันทรแก้ว (ประธานฝ่ายจิตอาสา และบำเพ็ญประโยชน์)",
+            "14. ปิยะฉัตร โพธิ์เอี่ยม (ประธานกรรมการฝ่ายนักศึกษาสัมพันธ์ และวิเทศสัมพันธ์)",
+            "15. ทิพธัญญา ทัศนา (ประธานกรรมการฝ่ายวิชาการ)",
+            "16. คณชาภูมิ ญาณู (ประธานกรรมการฝ่ายศาสนา และศิลปวัฒนธรรม)"
+        ];
+
+        /**
+         * 3. นายกสโมสรนักศึกษาคณะและวิทยาลัย (22 ท่าน)
+         * รายชื่อจริงพร้อมตำแหน่งทางการ (ไม่ระบุรหัสนักศึกษาและชื่อเล่นตามระเบียบ PDPA)
+         */
+        const defaultFacultyList = [
+            "1. ณรพัฒ อัตถศาสตร์ (นายกสโมสรนักศึกษาคณะมนุษยศาสตร์)",
+            "2. กิตติกร พรมตัน (นายกสโมสรนักศึกษาคณะศึกษาศาสตร์)",
+            "3. พงศ์ภวัน สิงห์ทอง (นายกสโมสรนักศึกษาคณะวิจิตรศิลป์)",
+            "4. คมชาญ เหลืองตระกูล (นายกสโมสรนักศึกษาคณะสังคมศาสตร์)",
+            "5. วิชชากร หมื่นรัก (นายกสโมสรนักศึกษาคณะวิทยาศาสตร์)",
+            "6. ตฤณภพ มีโชคชัย (นายกสโมสรนักศึกษาคณะวิศวกรรมศาสตร์)",
+            "7. ณัฐกิตติ์ พิชัย (นายกสโมสรนักศึกษาคณะแพทยศาสตร์)",
+            "8. ธนพร วิไลจันทร์ (นายกสโมสรนักศึกษาคณะเกษตรศาสตร์)",
+            "9. ชุติมณฑน์ พรมศร (นายกสโมสรนักศึกษาคณะทันตแพทยศาสตร์)",
+            "10. อมลวรรณ ณ สงขลา (นายกสโมสรนักศึกษาคณะเภสัชศาสตร์)",
+            "11. จอมขวัญ อำพันพงศ์ (นายกสโมสรนักศึกษาคณะเทคนิคการแพทย์)",
+            "12. จิรายุทธ ศรีคำ (นายกสโมสรนักศึกษาคณะพยาบาลศาสตร์)",
+            "13. กัลยทรรศน์ สุปินะ (นายกสโมสรนักศึกษาคณะอุตสาหกรรมเกษตร)",
+            "14. ชญาดา ดีสมศักดิ์ (นายกสโมสรนักศึกษาคณะสัตวแพทยศาสตร์)",
+            "15. สุวิจักขณ์ ณีศะนันท์ (นายกสโมสรนักศึกษาคณะบริหารธุรกิจ)",
+            "16. กชกร ทองพันชั่ง (นายกสโมสรนักศึกษาคณะเศรษฐศาสตร์)",
+            "17. ศุภัสดา ทองดี (นายกสโมสรนักศึกษาคณะสถาปัตยกรรมศาสตร์)",
+            "18. วิภาวินี วันศุกร์ (นายกสโมสรนักศึกษาคณะการสื่อสารมวลชน)",
+            "19. ยุทธการ ไทยเจริญ (นายกสโมสรนักศึกษาคณะรัฐศาสตร์และรัฐประศาสนศาสตร์)",
+            "20. ณัฐธิดา วิเศษโวหาร (นายกสโมสรนักศึกษาคณะนิติศาสตร์)",
+            "21. ณัฐภัทร จักขุเรือง (นายกสโมสรนักศึกษาวิทยาลัยศิลปะ สื่อ และเทคโนโลยี)",
+            "22. รินรดา ณะลุนลี (นายกสโมสรนักศึกษาวิทยาลัยนานาชาตินวัตกรรมดิจิทัล)"
+        ];
+
+        /**
+         * 4. คณะกรรมการหอพักนักศึกษา (3 ท่าน)
+         * รายชื่อจริงพร้อมตำแหน่งทางการ (ไม่ระบุรหัสนักศึกษาและชื่อเล่นตามระเบียบ PDPA)
+         */
+        const defaultDormList = [
+            "1. พิเชฐ แซ่ย่าง (ประธานคณะกรรมการหอพักนักศึกษามหาวิทยาลัยเชียงใหม่)",
+            "2. พรรพษา เรืองศรี (รองประธานคณะกรรมการหอพักนักศึกษา ฝ่ายหญิง)",
+            "3. ศิรสิทธิ์ ตุ่นฝั้น (รองประธานคณะกรรมการหอพักนักศึกษา ฝ่ายชาย)"
+        ];
+
+        let councilMembersList = [...defaultCouncilList];
+        let smcMembersList = [...defaultSmcList];
+        let facultyMembersList = [...defaultFacultyList];
+        let dormMembersList = [...defaultDormList];
+
+        window.onload = function() {
+            loadSavedRosters();
+
+            // Real-time Clock & Deadline Timer Interval locked to GMT+7 (Asia/Bangkok)
+            setInterval(updateClocks, 1000);
+            updateClocks();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            currentMeetingTitle = urlParams.get('title') || "การประชุมองค์การนักศึกษามหาวิทยาลัยเชียงใหม่ สมัยสามัญ ครั้งที่ 1/2569";
+            const dateText = urlParams.get('dateText') || "วันศุกร์ที่ 14 พฤศจิกายน 2569 เวลา 17.00 - 21.00 น.";
+            const deadlineRaw = urlParams.get('deadline');
+
+            document.getElementById('displayTitle').innerText = currentMeetingTitle;
+            document.getElementById('displayDateText').innerText = dateText;
+
+            if (deadlineRaw) {
+                let isoString = deadlineRaw;
+                if (!isoString.includes('+') && !isoString.endsWith('Z')) {
+                    isoString += (isoString.length === 16 ? ':00' : '') + '+07:00';
+                }
+                deadlineTime = new Date(isoString);
+            } else {
+                document.getElementById('countdownText').innerText = "ไม่ได้ตั้งเวลาปิดรับคำตอบ";
+            }
+
+            fetchData();
+            setInterval(fetchData, 4000);
+        };
+
+        function updateClocks() {
+            const now = new Date();
+            if (deadlineTime) {
+                const diff = deadlineTime.getTime() - now.getTime();
+                if (diff <= 0) {
+                    document.getElementById('closedOverlay').classList.remove('hidden');
+                    document.getElementById('countdownText').innerText = "ปิดรับคำตอบแล้ว";
+                } else {
+                    const hours = Math.floor(diff / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                    document.getElementById('countdownText').innerText = `ปิดรับใน ${hours}ชม. ${minutes}น. ${seconds}ส.`;
+                }
+            }
+        }
+
+        /* ------------------ ROSTER STORAGE & ADMIN ------------------ */
+        function loadSavedRosters() {
+            const savedCouncil = localStorage.getItem('cmu_so_roster_council_v4');
+            const savedSmc = localStorage.getItem('cmu_so_roster_smc_v4');
+            const savedFaculty = localStorage.getItem('cmu_so_roster_faculty_v4');
+            const savedDorm = localStorage.getItem('cmu_so_roster_dorm_v4');
+
+            if (savedCouncil) { try { councilMembersList = JSON.parse(savedCouncil); } catch(e){} }
+            if (savedSmc) { try { smcMembersList = JSON.parse(savedSmc); } catch(e){} }
+            if (savedFaculty) { try { facultyMembersList = JSON.parse(savedFaculty); } catch(e){} }
+            if (savedDorm) { try { dormMembersList = JSON.parse(savedDorm); } catch(e){} }
+
+            document.getElementById('txtRosterCouncil').value = councilMembersList.join('\n');
+            document.getElementById('txtRosterSmc').value = smcMembersList.join('\n');
+            document.getElementById('txtRosterFaculty').value = facultyMembersList.join('\n');
+            document.getElementById('txtRosterDorm').value = dormMembersList.join('\n');
+        }
+
+        function saveCustomRosters() {
+            const cTxt = document.getElementById('txtRosterCouncil').value.trim();
+            const sTxt = document.getElementById('txtRosterSmc').value.trim();
+            const fTxt = document.getElementById('txtRosterFaculty').value.trim();
+            const dTxt = document.getElementById('txtRosterDorm').value.trim();
+
+            if (cTxt) {
+                councilMembersList = cTxt.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+                localStorage.setItem('cmu_so_roster_council_v4', JSON.stringify(councilMembersList));
+            }
+            if (sTxt) {
+                smcMembersList = sTxt.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+                localStorage.setItem('cmu_so_roster_smc_v4', JSON.stringify(smcMembersList));
+            }
+            if (fTxt) {
+                facultyMembersList = fTxt.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+                localStorage.setItem('cmu_so_roster_faculty_v4', JSON.stringify(facultyMembersList));
+            }
+            if (dTxt) {
+                dormMembersList = dTxt.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+                localStorage.setItem('cmu_so_roster_dorm_v4', JSON.stringify(dormMembersList));
+            }
+
+            updateSeatDropdown(cachedData);
+            updateStatsAndQuorum(cachedData);
+            showToast("บันทึกรายชื่อผู้เข้าร่วม 4 องค์กรเรียบร้อยแล้ว!", "success");
+        }
+
+        function resetDefaultRosters() {
+            localStorage.removeItem('cmu_so_roster_council_v4');
+            localStorage.removeItem('cmu_so_roster_smc_v4');
+            localStorage.removeItem('cmu_so_roster_faculty_v4');
+            localStorage.removeItem('cmu_so_roster_dorm_v4');
+            localStorage.removeItem('cmu_so_roster_council_v3');
+            localStorage.removeItem('cmu_so_roster_smc_v3');
+            localStorage.removeItem('cmu_so_roster_faculty_v3');
+            localStorage.removeItem('cmu_so_roster_dorm_v3');
+            localStorage.removeItem('cmu_so_roster_council_v2');
+            localStorage.removeItem('cmu_so_roster_smc_v2');
+            localStorage.removeItem('cmu_so_roster_faculty_v2');
+            localStorage.removeItem('cmu_so_roster_dorm_v2');
+            localStorage.removeItem('cmu_so_roster_council');
+            localStorage.removeItem('cmu_so_roster_org');
+            location.reload();
+        }
+
+        function switchAdminTab(tab) {
+            const tabLinkGen = document.getElementById('admTabLinkGen');
+            const tabRoster = document.getElementById('admTabRoster');
+            const secLinkGen = document.getElementById('admSectionLinkGen');
+            const secRoster = document.getElementById('admSectionRoster');
+
+            if (tab === 'linkGen') {
+                tabLinkGen.className = "px-3 py-2 border-b-2 border-purple-700 text-purple-900 font-bold cursor-pointer";
+                tabRoster.className = "px-3 py-2 border-b-2 border-transparent text-slate-500 hover:text-slate-800 cursor-pointer";
+                secLinkGen.classList.remove('hidden');
+                secRoster.classList.add('hidden');
+            } else {
+                tabRoster.className = "px-3 py-2 border-b-2 border-purple-700 text-purple-900 font-bold cursor-pointer";
+                tabLinkGen.className = "px-3 py-2 border-b-2 border-transparent text-slate-500 hover:text-slate-800 cursor-pointer";
+                secRoster.classList.remove('hidden');
+                secLinkGen.classList.add('hidden');
+            }
+        }
+
+        function toggleAdminModal(show) {
+            const modal = document.getElementById('adminModal');
+            if (show) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function setPresetTitle(title) {
+            document.getElementById('genTitle').value = title;
+        }
+
+        function generateLink() {
+            const title = document.getElementById('genTitle').value.trim();
+            const dateText = document.getElementById('genDateText').value.trim();
+            const deadline = document.getElementById('genDeadline').value;
+            
+            if (!title || !deadline) { 
+                showToast("กรุณากรอกชื่อการประชุมและเวลาปิดฟอร์มให้ครบถ้วน", "warning"); 
+                return; 
+            }
+
+            const baseUrl = window.location.href.split('?')[0];
+            const params = new URLSearchParams({ title: title, dateText: dateText, deadline: deadline });
+            const newLink = baseUrl + '?' + params.toString();
+            
+            document.getElementById('resultLink').value = newLink;
+            document.getElementById('resultLinkBox').classList.remove('hidden');
+            showToast("สร้างลิงก์การประชุมสำเร็จ!", "success");
+        }
+
+        function copyLink() {
+            const copyText = document.getElementById('resultLink');
+            if (!copyText.value) return;
+            copyText.select();
+            navigator.clipboard.writeText(copyText.value);
+            showToast("คัดลอกลิงก์เรียบร้อยแล้ว!", "success");
+        }
+
+        /* ------------------ FORM HANDLERS & 4 ATTENDANCE CHOICES ------------------ */
+
+        function handleTypeChange() {
+            const selectedType = document.querySelector('input[name="memberType"]:checked')?.value;
+            const select = document.getElementById('fSeat');
+            const seatNotice = document.getElementById('seatNotice');
+            
+            if (!selectedType) {
+                select.disabled = true;
+                select.innerHTML = '<option value="" class="text-slate-400">-- กรุณาเลือกสังกัดองค์กรในข้อ 1 ก่อน --</option>';
+                seatNotice.innerText = '';
+                return;
+            }
+
+            updateSeatDropdown(cachedData);
+            toggleAttendanceFields();
+        }
+
+        function handleSeatSelectionChange() {
+            const seat = document.getElementById('fSeat').value;
+            const seatNotice = document.getElementById('seatNotice');
+            if (seat) {
+                seatNotice.innerText = `โควตาที่นั่ง: ${seat} (1 โควตานับ 1 สิทธิ์)`;
+            } else {
+                seatNotice.innerText = '';
+            }
+        }
+
+        /**
+         * 4 Specific Attendance Choices Logic:
+         * 1. สะดวกเข้าร่วมประชุม รูปแบบ Onsite (เสนอญัตติได้)
+         * 2. สะดวกเข้าร่วมประชุม รูปแบบ Online (เสนอญัตติได้)
+         * 3. ไม่สะดวกเข้าร่วมประชุม และมอบหมายผู้แทน (ระบุ ชื่อ-สกุล-ตำแหน่ง, รูปแบบ Onsite/Online, เสนอญัตติได้)
+         * 4. ไม่สะดวกเข้าร่วมประชุม และไม่มอบหมายผู้แทน (ไม่ต้องแจ้งเหตุผล)
+         */
+        function toggleAttendanceFields() {
+            const status = document.getElementById('fStatus').value;
+            const selectedType = document.querySelector('input[name="memberType"]:checked')?.value;
+            
+            const boxRep = document.getElementById('boxRepresentative');
+            const boxCouncilRepNotice = document.getElementById('boxCouncilRepNotice');
+            const boxMotionSection = document.getElementById('boxMotionSection');
+            const lblMotionPrompt = document.getElementById('lblMotionPrompt');
+            const statusNotice = document.getElementById('statusNotice');
+
+            const inpRepName = document.getElementById('fRepName');
+            const inpRepPos = document.getElementById('fRepPosition');
+
+            if (status === 'Onsite') {
+                statusNotice.innerText = "📍 เข้าร่วมประชุมด้วยตนเอง ณ ห้องประชุม (นับองค์ประชุม • จัดเตรียมอาหาร • เสนอญัตติได้)";
+                boxRep.classList.add('hidden');
+                inpRepName.required = false;
+                inpRepPos.required = false;
+
+                // Motion enabled
+                boxMotionSection.classList.remove('hidden');
+                lblMotionPrompt.innerHTML = "4. เสนอญัตติเพื่ออภิปรายหรือไม่ (เสนอญัตติได้) *";
+            } else if (status === 'Online') {
+                statusNotice.innerText = "💻 เข้าร่วมประชุมด้วยตนเอง ผ่านระบบสื่ออิเล็กทรอนิกส์ (นับองค์ประชุม • เสนอญัตติได้)";
+                boxRep.classList.add('hidden');
+                inpRepName.required = false;
+                inpRepPos.required = false;
+
+                // Motion enabled
+                boxMotionSection.classList.remove('hidden');
+                lblMotionPrompt.innerHTML = "4. เสนอญัตติเพื่ออภิปรายหรือไม่ (เสนอญัตติได้) *";
+            } else if (status === 'มอบหมายผู้แทน') {
+                statusNotice.innerText = "🤝 ไม่สะดวกเข้าร่วมประชุมด้วยตนเอง และมอบหมายผู้แทนเข้าร่วมแทน (ผู้แทนสามารถเสนอญัตติได้)";
+                boxRep.classList.remove('hidden');
+
+                if (selectedType === 'คณะบริหารสภานักศึกษา' || selectedType === 'สภานักศึกษา') {
+                    boxCouncilRepNotice.classList.remove('hidden');
+                    // Check if council member is permitted
+                    toggleCouncilRepState();
+                } else {
+                    boxCouncilRepNotice.classList.add('hidden');
+                    inpRepName.required = true;
+                    inpRepPos.required = true;
+                }
+
+                // Motion enabled for representative
+                boxMotionSection.classList.remove('hidden');
+                lblMotionPrompt.innerHTML = "4. ผู้แทนประสงค์เสนอญัตติเพื่ออภิปรายหรือไม่ (ผู้แทนสามารถเสนอญัตติได้ด้วย) *";
+            } else if (status === 'ไม่สะดวกเข้าร่วมประชุม') {
+                statusNotice.innerText = "❌ ไม่สะดวกเข้าร่วมประชุม และไม่มอบหมายผู้แทน";
+                boxRep.classList.add('hidden');
+                inpRepName.required = false;
+                inpRepPos.required = false;
+
+                // Motion hidden for absent seats with no representative
+                boxMotionSection.classList.add('hidden');
+                document.getElementById('fHasMotion').value = "ไม่มี";
+                toggleMotionFields();
+            } else {
+                statusNotice.innerText = "";
+                boxRep.classList.add('hidden');
+                inpRepName.required = false;
+                inpRepPos.required = false;
+                boxMotionSection.classList.remove('hidden');
+                lblMotionPrompt.innerHTML = "4. เสนอญัตติเพื่ออภิปรายหรือไม่ *";
+            }
+        }
+
+        function toggleCouncilRepState() {
+            const isCouncilRepPermitted = document.getElementById('fCouncilRepAllowed').checked;
+            const inpRepName = document.getElementById('fRepName');
+            const inpRepPos = document.getElementById('fRepPosition');
+
+            inpRepName.required = isCouncilRepPermitted;
+            inpRepPos.required = isCouncilRepPermitted;
+        }
+
+        function toggleMotionFields() {
+            const hasMotion = document.getElementById('fHasMotion').value;
+            const boxMotion = document.getElementById('boxMotion');
+            const inpMotion = document.getElementById('fMotionDetail');
+            const lblMotionDetail = document.getElementById('lblMotionDetail');
+            const status = document.getElementById('fStatus').value;
+
+            if (status === 'มอบหมายผู้แทน') {
+                lblMotionDetail.innerText = "รายละเอียดญัตติที่ผู้แทนเสนอ *";
+            } else {
+                lblMotionDetail.innerText = "รายละเอียดญัตติที่เสนอ *";
+            }
+
+            if (hasMotion === 'มี') {
+                boxMotion.classList.remove('hidden');
+                inpMotion.required = true;
+            } else {
+                boxMotion.classList.add('hidden');
+                inpMotion.required = false;
+                inpMotion.value = '';
+            }
+        }
+
+        /**
+         * Mutual exclusivity: Each seat can respond only once
+         */
+        function updateSeatDropdown(meetingData) {
+            const select = document.getElementById('fSeat');
+            const lbl = document.getElementById('lblSeatSelect');
+            const selectedType = document.querySelector('input[name="memberType"]:checked')?.value;
+
+            if (!selectedType) return;
+
+            let targetList = [];
+            if (selectedType === 'คณะบริหารสภานักศึกษา' || selectedType === 'สภานักศึกษา') targetList = councilMembersList;
+            else if (selectedType === 'คณะกรรมการบริหาร ส.มช.') targetList = smcMembersList;
+            else if (selectedType === 'นายกสโมสรคณะและวิทยาลัย') targetList = facultyMembersList;
+            else if (selectedType === 'คณะกรรมการหอพักนักศึกษา') targetList = dormMembersList;
+            else targetList = [];
+
+            const targetTotal = targetList.length;
+
+            const respondedSeats = new Set(meetingData.map(item => item.seatTitle));
+            const availableSeats = targetList.filter(seat => !respondedSeats.has(seat));
+
+            select.innerHTML = '';
+
+            if (availableSeats.length === 0) {
+                let opt = document.createElement('option');
+                opt.value = "";
+                opt.textContent = `-- ทุกโควตาที่นั่งใน${selectedType} ลงทะเบียนครบแล้ว (${targetTotal}/${targetTotal}) --`;
+                opt.className = "text-slate-400 font-medium";
+                select.appendChild(opt);
+                select.disabled = true;
+
+                if (lbl) {
+                    lbl.innerHTML = `2. เลือกตำแหน่ง / สังกัด / รายชื่อของคุณ * <span class="text-emerald-700 font-bold ml-1">(ลงทะเบียนครบทุกที่นั่งแล้ว)</span>`;
+                }
+            } else {
+                select.disabled = false;
+
+                let defaultOpt = document.createElement('option');
+                defaultOpt.value = "";
+                defaultOpt.textContent = `-- เลือกตำแหน่ง/สังกัดใน${selectedType} (คงเหลือ ${availableSeats.length} ที่นั่ง) --`;
+                defaultOpt.className = "text-slate-400";
+                select.appendChild(defaultOpt);
+
+                availableSeats.forEach(seat => {
+                    let opt = document.createElement('option');
+                    opt.value = seat;
+                    opt.textContent = seat;
+                    opt.className = "bg-white text-slate-900";
+                    select.appendChild(opt);
+                });
+
+                if (lbl) {
+                    lbl.innerHTML = `2. เลือกตำแหน่ง / สังกัด / รายชื่อของคุณ (${selectedType}) * <span class="text-purple-700 font-bold ml-1">(คงเหลืออีก ${availableSeats.length} ที่นั่ง)</span>`;
+                }
+            }
+        }
+
+        /* ------------------ DATA SUBMISSION & FETCHING ------------------ */
+        function submitForm(e) {
+            e.preventDefault();
+
+            const selectedType = document.querySelector('input[name="memberType"]:checked')?.value;
+            if (!selectedType) {
+                showToast("กรุณาเลือกสังกัดองค์กรของคุณก่อนส่งข้อมูล", "warning");
+                return;
+            }
+
+            const selectSeat = document.getElementById('fSeat');
+            if (!selectSeat.value) {
+                showToast("กรุณาเลือกตำแหน่ง/สังกัดของคุณก่อนส่งข้อมูล", "warning");
+                return;
+            }
+
+            const status = document.getElementById('fStatus').value;
+            if (!status) {
+                showToast("กรุณาเลือกสถานะการเข้าร่วมประชุม", "warning");
+                return;
+            }
+
+            // Representative Payload
+            let hasRep = "ไม่มี";
+            let repName = "";
+            let repPos = "";
+            let repMode = "";
+
+            if (status === 'มอบหมายผู้แทน') {
+                if (selectedType === 'คณะบริหารสภานักศึกษา' || selectedType === 'สภานักศึกษา') {
+                    if (!document.getElementById('fCouncilRepAllowed').checked) {
+                        showToast("สภานักศึกษาไม่สามารถส่งผู้แทนได้ เว้นแต่ได้รับอนุญาตจากประธานที่ประชุม", "warning");
+                        return;
+                    }
+                    hasRep = "มี (อนุญาตกรณีพิเศษ)";
+                } else {
+                    hasRep = "มี";
+                }
+
+                repName = document.getElementById('fRepName').value.trim();
+                repPos = document.getElementById('fRepPosition').value.trim();
+                repMode = document.getElementById('fRepMode').value;
+
+                if (!repName || !repPos) {
+                    showToast("กรุณากรอกชื่อ-สกุล และตำแหน่งของผู้แทนให้ครบถ้วน", "warning");
+                    return;
+                }
+            }
+
+            const hasMotion = document.getElementById('fHasMotion').value;
+            const motionDetail = (hasMotion === 'มี') ? document.getElementById('fMotionDetail').value.trim() : "";
+            const remark = document.getElementById('fRemark').value.trim();
+
+            const btn = document.getElementById('btnSubmit');
+            const btnText = document.getElementById('btnText');
+            btn.disabled = true;
+            btnText.innerText = "กำลังบันทึกข้อมูล...";
+
+            const record = {
+                timestamp: new Date().toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' }),
+                meetingTitle: currentMeetingTitle,
+                memberType: selectedType,
+                seatTitle: selectSeat.value,
+                status: status,
+                hasRep: hasRep,
+                repName: repName,
+                repPosition: repPos,
+                repMode: repMode,
+                hasMotion: hasMotion,
+                motionDetail: motionDetail,
+                remark: remark
+            };
+
+            // Attempt save to Apps Script, or fallback to LocalStorage
+            if (API_URL && !API_URL.includes("ใส่_WEB_APP_URL")) {
+                const params = new URLSearchParams({
+                    action: 'insert',
+                    ...record
+                });
+
+                fetch(API_URL + '?' + params.toString())
+                .then(res => res.json())
+                .then(data => {
+                    onSubmissionSuccess();
+                })
+                .catch(err => {
+                    console.warn("API offline, saving to local storage fallback:", err);
+                    saveToLocalStorage(record);
+                    onSubmissionSuccess();
+                });
+            } else {
+                saveToLocalStorage(record);
+                onSubmissionSuccess();
+            }
+
+            function onSubmissionSuccess() {
+                showToast("ส่งข้อมูลลงทะเบียนสำเร็จแล้ว!", "success");
+                document.getElementById('mainForm').reset();
+                document.querySelectorAll('input[name="memberType"]').forEach(r => r.checked = false);
+                handleTypeChange();
+                toggleAttendanceFields();
+                toggleMotionFields();
+
+                fetchData();
+                btn.disabled = false;
+                btnText.innerText = "ยืนยันและส่งข้อมูลลงทะเบียน";
+            }
+        }
+
+        function saveToLocalStorage(record) {
+            let localRecords = [];
+            try {
+                localRecords = JSON.parse(localStorage.getItem('cmu_so_records') || '[]');
+            } catch(e){}
+            localRecords.push(record);
+            localStorage.setItem('cmu_so_records', JSON.stringify(localRecords));
+        }
+
+        function fetchData() {
+            if (API_URL && !API_URL.includes("ใส่_WEB_APP_URL")) {
+                fetch(API_URL)
+                .then(res => res.json())
+                .then(data => {
+                    if (Array.isArray(data)) {
+                        cachedData = data.filter(item => item.meetingTitle === currentMeetingTitle);
+                        processData();
+                    }
+                })
+                .catch(err => {
+                    loadFromLocalStorage();
+                });
+            } else {
+                loadFromLocalStorage();
+            }
+
+            function loadFromLocalStorage() {
+                try {
+                    const localRecords = JSON.parse(localStorage.getItem('cmu_so_records') || '[]');
+                    cachedData = localRecords.filter(item => item.meetingTitle === currentMeetingTitle);
+                    processData();
+                } catch(e){}
+            }
+
+            function processData() {
+                updateStatsAndQuorum(cachedData);
+                updateSeatDropdown(cachedData);
+                renderDashboard();
+                renderOfficialReport();
+            }
+        }
+
+        /* ------------------ QUORUM & STATS CALCULATION ------------------ */
+        function updateStatsAndQuorum(meetingData) {
+            const totalCouncilSeats = councilMembersList.length; // 9
+            const totalSmcSeats = smcMembersList.length; // 16
+            const totalFacultySeats = facultyMembersList.length; // 22
+            const totalDormSeats = dormMembersList.length; // 3
+            const totalMeetingSeats = totalCouncilSeats + totalSmcSeats + totalFacultySeats + totalDormSeats; // 50
+            const quorumThreshold = Math.floor(totalMeetingSeats / 2) + 1; // 26 (> 50%)
+
+            const councilResponses = meetingData.filter(i => i.memberType === 'คณะบริหารสภานักศึกษา' || i.memberType === 'สภานักศึกษา');
+            const smcResponses = meetingData.filter(i => i.memberType === 'คณะกรรมการบริหาร ส.มช.');
+            const facultyResponses = meetingData.filter(i => i.memberType === 'นายกสโมสรคณะและวิทยาลัย');
+            const dormResponses = meetingData.filter(i => i.memberType === 'คณะกรรมการหอพักนักศึกษา');
+
+            function getGrpStats(resps) {
+                const onsite = resps.filter(i => i.status === 'Onsite').length;
+                const online = resps.filter(i => i.status === 'Online').length;
+                const reps = resps.filter(i => i.status === 'มอบหมายผู้แทน');
+                const absent = resps.filter(i => i.status === 'ไม่สะดวกเข้าร่วมประชุม').length;
+                const repOnsite = reps.filter(i => i.repMode === 'Onsite').length;
+                const repOnline = reps.filter(i => i.repMode === 'Online').length;
+                const quorum = onsite + online + reps.length;
+                const catering = onsite + repOnsite;
+                return { onsite, online, reps: reps.length, absent, repOnsite, repOnline, quorum, catering, total: resps.length };
+            }
+
+            const c = getGrpStats(councilResponses);
+            const s = getGrpStats(smcResponses);
+            const f = getGrpStats(facultyResponses);
+            const d = getGrpStats(dormResponses);
+
+            const currentQuorumCount = c.quorum + s.quorum + f.quorum + d.quorum;
+            const totalCatering = c.catering + s.catering + f.catering + d.catering;
+            const totalAbsent = c.absent + s.absent + f.absent + d.absent;
+            const totalMotions = meetingData.filter(i => i.hasMotion === 'มี').length;
+
+            // Box 1: Council (9)
+            document.getElementById('cntCouncilTotal').innerText = `${councilResponses.length}/${totalCouncilSeats}`;
+            document.getElementById('councilOnsite').innerText = c.onsite;
+            document.getElementById('councilOnline').innerText = c.online;
+            document.getElementById('councilRepCount').innerText = c.reps;
+
+            // Box 2: SMC (16)
+            document.getElementById('cntSmcTotal').innerText = `${smcResponses.length}/${totalSmcSeats}`;
+            document.getElementById('smcOnsite').innerText = s.onsite;
+            document.getElementById('smcOnline').innerText = s.online;
+            document.getElementById('smcRepCount').innerText = s.reps;
+
+            // Box 3: Faculty (22)
+            document.getElementById('cntFacultyTotal').innerText = `${facultyResponses.length}/${totalFacultySeats}`;
+            document.getElementById('facultyOnsite').innerText = f.onsite;
+            document.getElementById('facultyOnline').innerText = f.online;
+            document.getElementById('facultyRepCount').innerText = f.reps;
+
+            // Box 4: Dorm (3)
+            document.getElementById('cntDormTotal').innerText = `${dormResponses.length}/${totalDormSeats}`;
+            document.getElementById('dormOnsite').innerText = d.onsite;
+            document.getElementById('dormOnline').innerText = d.online;
+            document.getElementById('dormRepCount').innerText = d.reps;
+
+            // Summary
+            document.getElementById('totalCateringCount').innerText = totalCatering;
+            document.getElementById('totalAbsentCount').innerText = `${totalAbsent} คน`;
+            document.getElementById('totalMotionCount').innerText = `${totalMotions} เรื่อง`;
+
+            // Filter Badges
+            document.getElementById('cntFilterCouncil').innerText = councilResponses.length;
+            document.getElementById('cntFilterSmc').innerText = smcResponses.length;
+            document.getElementById('cntFilterFaculty').innerText = facultyResponses.length;
+            document.getElementById('cntFilterDorm').innerText = dormResponses.length;
+
+            // Quorum Bar & Status
+            document.getElementById('quorumCounter').innerText = `${currentQuorumCount}/${totalMeetingSeats}`;
+            document.getElementById('quorumCompactBadge').innerText = `องค์ประชุม: ${currentQuorumCount}/${totalMeetingSeats}`;
+            document.getElementById('quorumThresholdBadge').innerText = `เกณฑ์บังคับกึ่งหนึ่ง (> ${quorumThreshold - 1} ที่นั่ง = ${quorumThreshold} ขึ้นไป)`;
+
+            const pct = Math.min(Math.round((currentQuorumCount / totalMeetingSeats) * 100), 100);
+            document.getElementById('quorumProgressBar').style.width = `${pct}%`;
+
+            const badge = document.getElementById('quorumBadge');
+            if (currentQuorumCount >= quorumThreshold) {
+                badge.className = "px-2.5 py-0.5 rounded text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300";
+                badge.innerHTML = `✅ ครบองค์ประชุมแล้ว (${currentQuorumCount}/${totalMeetingSeats})`;
+            } else {
+                const diff = quorumThreshold - currentQuorumCount;
+                badge.className = "px-2.5 py-0.5 rounded text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-300";
+                badge.innerHTML = `⏳ ขาดอีก ${diff} คนจะครบกึ่งหนึ่ง`;
+            }
+        }
+
+        /* ------------------ FILTERING & DASHBOARD RENDERING ------------------ */
+        function setGroupFilter(group) {
+            activeGroup = group;
+            updateFilterUI();
+            renderDashboard();
+        }
+
+        function setTabFilter(tab) {
+            activeTab = tab;
+            updateFilterUI();
+            renderDashboard();
+        }
+
+        function quickOnsiteSeatsPreset() {
+            activeGroup = 'ALL';
+            activeTab = 'Onsite';
+            updateFilterUI();
+            renderDashboard();
+            showToast("🏷️ แสดงรายชื่อผู้เข้าประชุม Onsite (สมาชิก & ผู้แทน) สำหรับจัดป้ายชื่อที่นั่ง", "info");
+        }
+
+        function updateFilterUI() {
+            document.querySelectorAll('.group-btn').forEach(btn => {
+                btn.className = "group-btn px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 font-semibold transition shrink-0 cursor-pointer flex items-center gap-1 border border-slate-200";
+            });
+            const activeGBtn = document.getElementById(`group${activeGroup}`);
+            if (activeGBtn) {
+                activeGBtn.className = "group-btn px-2.5 py-1 rounded-lg bg-purple-900 text-white font-bold transition shrink-0 cursor-pointer flex items-center gap-1 shadow-2xs";
+            }
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = "tab-btn px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 font-medium transition shrink-0 cursor-pointer";
+            });
+            const activeTBtn = document.getElementById(`tab${activeTab}`);
+            if (activeTBtn) {
+                activeTBtn.className = "tab-btn px-2.5 py-1 rounded-md bg-purple-900 text-white font-bold transition shrink-0 cursor-pointer";
+            }
+        }
+
+        function filterDashboard() {
+            renderDashboard();
+        }
+
+        function renderDashboard() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            let filtered = cachedData.slice().reverse();
+
+            // 1. Group Filter
+            if (activeGroup === 'COUNCIL') {
+                filtered = filtered.filter(i => i.memberType === 'คณะบริหารสภานักศึกษา' || i.memberType === 'สภานักศึกษา');
+            } else if (activeGroup === 'SMC') {
+                filtered = filtered.filter(i => i.memberType === 'คณะกรรมการบริหาร ส.มช.');
+            } else if (activeGroup === 'FACULTY') {
+                filtered = filtered.filter(i => i.memberType === 'นายกสโมสรคณะและวิทยาลัย');
+            } else if (activeGroup === 'DORM') {
+                filtered = filtered.filter(i => i.memberType === 'คณะกรรมการหอพักนักศึกษา');
+            }
+
+            // 2. Status Tab Filter
+            if (activeTab === 'Onsite') {
+                filtered = filtered.filter(i => i.status === 'Onsite' || (i.status === 'มอบหมายผู้แทน' && i.repMode === 'Onsite'));
+            } else if (activeTab === 'Online') {
+                filtered = filtered.filter(i => i.status === 'Online' || (i.status === 'มอบหมายผู้แทน' && i.repMode === 'Online'));
+            } else if (activeTab === 'REP') {
+                filtered = filtered.filter(i => i.status === 'มอบหมายผู้แทน');
+            } else if (activeTab === 'ไม่สะดวก') {
+                filtered = filtered.filter(i => i.status === 'ไม่สะดวกเข้าร่วมประชุม');
+            } else if (activeTab === 'Motion') {
+                filtered = filtered.filter(i => i.hasMotion === 'มี');
+            }
+
+            // 3. Search Query
+            if (query) {
+                filtered = filtered.filter(i => 
+                    (i.seatTitle && i.seatTitle.toLowerCase().includes(query)) ||
+                    (i.repName && i.repName.toLowerCase().includes(query)) ||
+                    (i.repPosition && i.repPosition.toLowerCase().includes(query)) ||
+                    (i.motionDetail && i.motionDetail.toLowerCase().includes(query)) ||
+                    (i.remark && i.remark.toLowerCase().includes(query))
+                );
+            }
+
+            if (filtered.length === 0) {
+                document.getElementById('dataList').innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-10 text-slate-400 space-y-1 border border-dashed border-slate-300 rounded-xl">
+                        <span class="text-xl">📋</span>
+                        <p class="text-xs font-medium text-slate-500">ไม่มีข้อมูลตามเงื่อนไขที่เลือก</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            filtered.forEach(item => {
+                let typeBadge = '';
+                if (item.memberType === 'คณะบริหารสภานักศึกษา' || item.memberType === 'สภานักศึกษา') {
+                    typeBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-800 border border-purple-200">สภานักศึกษา</span>`;
+                } else if (item.memberType === 'คณะกรรมการบริหาร ส.มช.') {
+                    typeBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-100 text-indigo-800 border border-indigo-200">กก.บห. ส.มช.</span>`;
+                } else if (item.memberType === 'นายกสโมสรคณะและวิทยาลัย') {
+                    typeBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-100 text-sky-800 border border-sky-200">สโมสรคณะฯ</span>`;
+                } else if (item.memberType === 'คณะกรรมการหอพักนักศึกษา') {
+                    typeBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">กก.หอพัก</span>`;
+                } else {
+                    typeBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-800 border border-slate-200">${escapeHtml(item.memberType)}</span>`;
+                }
+
+                let statusBadge = '';
+
+                if (item.status === 'Onsite') {
+                    statusBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">📍 สะดวก Onsite <span class="text-[9px] font-bold text-amber-900 bg-amber-100 px-1 py-0.2 rounded border border-amber-300 ml-0.5">🏷️ ป้ายชื่อ</span></span>`;
+                } else if (item.status === 'Online') {
+                    statusBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-sky-50 text-sky-700 border border-sky-200">💻 สะดวก Online</span>`;
+                } else if (item.status === 'มอบหมายผู้แทน') {
+                    let repModeBadge = item.repMode === 'Onsite' 
+                        ? '<span class="text-emerald-700 font-bold">Onsite (จัดอาหาร)</span>' 
+                        : '<span class="text-sky-700 font-bold">Online</span>';
+                    statusBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-900 border border-amber-200">🤝 มอบหมายผู้แทน (${repModeBadge})</span>`;
+                } else if (item.status === 'ไม่สะดวกเข้าร่วมประชุม') {
+                    statusBadge = `<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-rose-50 text-rose-700 border border-rose-200">❌ ไม่สะดวกเข้าร่วม (ไม่มอบหมาย)</span>`;
+                }
+
+                // Representative Details
+                let repHtml = '';
+                if (item.status === 'มอบหมายผู้แทน' && item.repName) {
+                    let councilRepNotice = (item.hasRep === 'มี (อนุญาตกรณีพิเศษ)')
+                        ? '<span class="text-[9px] text-amber-900 font-bold bg-amber-200 px-1.5 py-0.2 rounded ml-1">มติสิทธิ์ออกเสียงขึ้นอยู่กับที่ประชุม</span>'
+                        : '';
+                    repHtml = `
+                        <div class="mt-2 bg-amber-50/80 p-2.5 rounded-lg border border-amber-200 text-xs text-amber-950 space-y-1">
+                            <div class="flex items-center justify-between font-bold text-amber-900">
+                                <span>🤝 ผู้แทน: <u>${escapeHtml(item.repName)}</u></span>
+                                ${councilRepNotice}
+                            </div>
+                            <div class="text-[11px] text-slate-700">
+                                <strong>ตำแหน่งในสังกัด:</strong> ${escapeHtml(item.repPosition)} | <strong>รูปแบบการเข้าร่วม:</strong> ${escapeHtml(item.repMode || 'Onsite')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Motion detail
+                let motionHtml = (item.hasMotion === 'มี' && item.motionDetail)
+                    ? `<div class="mt-2 bg-purple-50 p-2.5 rounded-lg border border-purple-200 text-xs text-purple-950">
+                        <div class="font-bold text-purple-900 flex items-center justify-between">
+                            <span>📌 ญัตติที่เสนอเพื่ออภิปราย:</span>
+                            <span class="text-[10px] text-purple-700 font-normal">${item.status === 'มอบหมายผู้แทน' ? '(เสนอโดยผู้แทน)' : '(เสนอโดยสมาชิก)'}</span>
+                        </div>
+                        <p class="leading-relaxed text-slate-800 mt-0.5">${escapeHtml(item.motionDetail)}</p>
+                       </div>`
+                    : '';
+
+                // Remarks
+                let remarkHtml = item.remark 
+                    ? `<p class="text-[11px] text-slate-500 mt-1 italic"><strong>หมายเหตุ:</strong> ${escapeHtml(item.remark)}</p>` 
+                    : '';
+
+                html += `
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 hover:border-purple-300 transition">
+                        <div class="flex items-center justify-between gap-2">
+                            <h4 class="font-bold text-xs sm:text-sm text-slate-900 flex items-center gap-1.5">
+                                ${escapeHtml(item.seatTitle)}
+                                ${typeBadge}
+                            </h4>
+                            <div class="shrink-0">${statusBadge}</div>
+                        </div>
+                        ${repHtml}
+                        ${motionHtml}
+                        ${remarkHtml}
+                    </div>
+                `;
+            });
+
+            document.getElementById('dataList').innerHTML = html;
+        }
+
+        /* ------------------ OFFICIAL REPORT PRINTING (ZERO OBSERVERS) ------------------ */
+        function renderOfficialReport() {
+            const docTitle = document.getElementById('reportDocTitle');
+            const docBody = document.getElementById('reportDocBody');
+
+            docTitle.innerText = `รายงานสรุปสถิติการตอบรับเข้าร่วมการประชุม${currentMeetingTitle}`;
+
+            const totalCouncilSeats = councilMembersList.length; // 9
+            const totalSmcSeats = smcMembersList.length; // 16
+            const totalFacultySeats = facultyMembersList.length; // 22
+            const totalDormSeats = dormMembersList.length; // 3
+            const totalMeetingSeats = totalCouncilSeats + totalSmcSeats + totalFacultySeats + totalDormSeats; // 50
+            const quorumThreshold = Math.floor(totalMeetingSeats / 2) + 1; // 26
+
+            const councilResponses = cachedData.filter(i => i.memberType === 'คณะบริหารสภานักศึกษา' || i.memberType === 'สภานักศึกษา');
+            const smcResponses = cachedData.filter(i => i.memberType === 'คณะกรรมการบริหาร ส.มช.');
+            const facultyResponses = cachedData.filter(i => i.memberType === 'นายกสโมสรคณะและวิทยาลัย');
+            const dormResponses = cachedData.filter(i => i.memberType === 'คณะกรรมการหอพักนักศึกษา');
+
+            function getGrpDetails(resps) {
+                const online = resps.filter(i => i.status === 'Online');
+                const onsite = resps.filter(i => i.status === 'Onsite');
+                const reps = resps.filter(i => i.status === 'มอบหมายผู้แทน');
+                const absent = resps.filter(i => i.status === 'ไม่สะดวกเข้าร่วมประชุม');
+                const repOnsite = reps.filter(i => i.repMode === 'Onsite').length;
+                const repOnline = reps.filter(i => i.repMode === 'Online').length;
+                const quorum = onsite.length + online.length + reps.length;
+                const catering = onsite.length + repOnsite;
+                return { online, onsite, reps, absent, repOnsite, repOnline, quorum, catering, total: resps.length };
+            }
+
+            const c = getGrpDetails(councilResponses);
+            const s = getGrpDetails(smcResponses);
+            const f = getGrpDetails(facultyResponses);
+            const d = getGrpDetails(dormResponses);
+
+            // Quorum Total Count
+            const totalAttendingQuorum = c.quorum + s.quorum + f.quorum + d.quorum;
+            const isQuorumReached = totalAttendingQuorum >= quorumThreshold;
+
+            // Catering Total Count
+            const totalCatering = c.catering + s.catering + f.catering + d.catering;
+
+            // Unresponded Roster
+            const respondedSeatsSet = new Set(cachedData.map(i => i.seatTitle));
+            const unrespondedCouncil = councilMembersList.filter(s => !respondedSeatsSet.has(s));
+            const unrespondedSmc = smcMembersList.filter(s => !respondedSeatsSet.has(s));
+            const unrespondedFaculty = facultyMembersList.filter(s => !respondedSeatsSet.has(s));
+            const unrespondedDorm = dormMembersList.filter(s => !respondedSeatsSet.has(s));
+
+            // Representatives List
+            let repListHtml = '';
+            const allReps = [...c.reps, ...s.reps, ...f.reps, ...d.reps];
+            if (allReps.length > 0) {
+                allReps.forEach(item => {
+                    let motionNote = item.hasMotion === 'มี' ? ' <span class="text-purple-800 font-semibold">[มีเสนอญัตติ]</span>' : '';
+                    repListHtml += `<div class="py-0.5 report-item">• <strong>${escapeHtml(item.repName)}</strong> (${escapeHtml(item.repPosition)}) ปฏิบัติหน้าที่แทน <u>${escapeHtml(item.seatTitle)}</u> [${escapeHtml(item.repMode || 'Onsite')}]${motionNote}</div>`;
+                });
+            } else {
+                repListHtml = `<div class="py-0.5 text-slate-500 italic report-item">(ไม่มีการมอบหมายผู้แทน)</div>`;
+            }
+
+            // Absent List
+            let absentListHtml = '';
+            const allAbsents = [...c.absent, ...s.absent, ...f.absent, ...d.absent];
+            if (allAbsents.length > 0) {
+                allAbsents.forEach(item => {
+                    absentListHtml += `<div class="py-0.5 report-item">• <strong>${escapeHtml(item.seatTitle)}</strong> <span class="text-rose-800">(ไม่สะดวกเข้าร่วมประชุม และไม่มอบหมายผู้แทน)</span></div>`;
+                });
+            } else {
+                absentListHtml = `<div class="py-0.5 text-slate-500 italic report-item">(ไม่มีผู้ตอบไม่สะดวกเข้าร่วม)</div>`;
+            }
+
+            // Motions List (from both titular members and representatives)
+            let motionsListHtml = '';
+            const allMotions = cachedData.filter(i => i.hasMotion === 'มี' && i.motionDetail);
+            if (allMotions.length > 0) {
+                allMotions.forEach((item, idx) => {
+                    let proposer = item.status === 'มอบหมายผู้แทน' 
+                        ? `${escapeHtml(item.repName)} (ผู้แทน ${escapeHtml(item.seatTitle)})`
+                        : `${escapeHtml(item.seatTitle)}`;
+                    motionsListHtml += `
+                        <div class="py-1 border-b border-slate-200 report-item">
+                            <div><strong>ญัตติที่ ${idx + 1}:</strong> โดย <u>${proposer}</u></div>
+                            <div class="pl-4 text-slate-800">${escapeHtml(item.motionDetail)}</div>
+                        </div>
+                    `;
+                });
+            } else {
+                motionsListHtml = `<div class="py-0.5 text-slate-500 italic report-item">(ไม่มีญัตติที่เสนอในที่ประชุม)</div>`;
+            }
+
+            // Unresponded list
+            let unrespondedHtml = '';
+            const totalUnresp = unrespondedCouncil.length + unrespondedSmc.length + unrespondedFaculty.length + unrespondedDorm.length;
+            if (totalUnresp > 0) {
+                unrespondedCouncil.forEach(s => {
+                    unrespondedHtml += `<div class="py-0.5 report-item">• [สภานักศึกษา] ${escapeHtml(s)}</div>`;
+                });
+                unrespondedSmc.forEach(s => {
+                    unrespondedHtml += `<div class="py-0.5 report-item">• [กก.บห. ส.มช.] ${escapeHtml(s)}</div>`;
+                });
+                unrespondedFaculty.forEach(s => {
+                    unrespondedHtml += `<div class="py-0.5 report-item">• [สโมสรคณะ/วิทยาลัย] ${escapeHtml(s)}</div>`;
+                });
+                unrespondedDorm.forEach(s => {
+                    unrespondedHtml += `<div class="py-0.5 report-item">• [กก.หอพักนักศึกษา] ${escapeHtml(s)}</div>`;
+                });
+            } else {
+                unrespondedHtml = `<div class="py-0.5 text-slate-500 italic report-item">(ทุกโควตาที่นั่งลงทะเบียนตอบรับครบถ้วนแล้ว)</div>`;
+            }
+
+            let html = `
+                <div class="space-y-4 text-black font-normal leading-relaxed text-sm">
+                    
+                    <!-- Section 1: Quorum Status Banner -->
+                    <div class="border-2 border-black p-3 bg-slate-50 report-item space-y-1">
+                        <div class="flex justify-between items-center font-bold text-base">
+                            <span>ผลการตรวจสอบองค์ประชุม (Quorum Status):</span>
+                            <span>${isQuorumReached ? '✅ ครบองค์ประชุม' : '❌ ไม่ครบองค์ประชุม'}</span>
+                        </div>
+                        <div class="text-xs text-slate-700">
+                            เกณฑ์บังคับกึ่งหนึ่งตามระเบียบ: ต้องมีผู้เข้าร่วมประชุม (ตัวจริง + ผู้แทน) <strong>มากกว่า ${quorumThreshold - 1} ที่นั่ง</strong> จากจำนวนทั้งหมด <strong>${totalMeetingSeats}</strong> ที่นั่ง
+                        </div>
+                        <div class="font-bold text-sm pt-1 border-t border-slate-300 flex justify-between">
+                            <span>ผู้เข้าร่วมประชุมนับเป็นองค์ประชุมทั้งสิ้น:</span>
+                            <span>${totalAttendingQuorum} / ${totalMeetingSeats} ที่นั่ง</span>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Attendance Table Breakdown -->
+                    <div class="report-item space-y-2">
+                        <div class="font-bold text-base text-black">1. สถิติจำแนกตามองค์กรและรูปแบบการเข้าร่วม (4 องค์กร)</div>
+                        <table class="w-full text-xs border-collapse border border-black text-center">
+                            <thead>
+                                <tr class="bg-slate-100 font-bold">
+                                    <th class="border border-black p-1.5 text-left pl-2">ฝ่าย/องค์กร</th>
+                                    <th class="border border-black p-1.5">โควตาทั้งหมด</th>
+                                    <th class="border border-black p-1.5">สะดวก Onsite</th>
+                                    <th class="border border-black p-1.5">สะดวก Online</th>
+                                    <th class="border border-black p-1.5">มอบหมายผู้แทน</th>
+                                    <th class="border border-black p-1.5">ไม่สะดวกเข้าร่วม</th>
+                                    <th class="border border-black p-1.5 bg-slate-200">รวมองค์ประชุม</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border border-black p-1.5 text-left pl-2 font-semibold">1. คณะบริหารสภานักศึกษา</td>
+                                    <td class="border border-black p-1.5 font-bold">${totalCouncilSeats}</td>
+                                    <td class="border border-black p-1.5">${c.onsite.length}</td>
+                                    <td class="border border-black p-1.5">${c.online.length}</td>
+                                    <td class="border border-black p-1.5">${c.reps.length}</td>
+                                    <td class="border border-black p-1.5">${c.absent.length}</td>
+                                    <td class="border border-black p-1.5 font-bold bg-slate-100">${c.quorum}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-black p-1.5 text-left pl-2 font-semibold">2. คณะกรรมการบริหาร ส.มช.</td>
+                                    <td class="border border-black p-1.5 font-bold">${totalSmcSeats}</td>
+                                    <td class="border border-black p-1.5">${s.onsite.length}</td>
+                                    <td class="border border-black p-1.5">${s.online.length}</td>
+                                    <td class="border border-black p-1.5">${s.reps.length}</td>
+                                    <td class="border border-black p-1.5">${s.absent.length}</td>
+                                    <td class="border border-black p-1.5 font-bold bg-slate-100">${s.quorum}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-black p-1.5 text-left pl-2 font-semibold">3. นายกสโมสรคณะและวิทยาลัย</td>
+                                    <td class="border border-black p-1.5 font-bold">${totalFacultySeats}</td>
+                                    <td class="border border-black p-1.5">${f.onsite.length}</td>
+                                    <td class="border border-black p-1.5">${f.online.length}</td>
+                                    <td class="border border-black p-1.5">${f.reps.length}</td>
+                                    <td class="border border-black p-1.5">${f.absent.length}</td>
+                                    <td class="border border-black p-1.5 font-bold bg-slate-100">${f.quorum}</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-black p-1.5 text-left pl-2 font-semibold">4. คณะกรรมการหอพักนักศึกษา</td>
+                                    <td class="border border-black p-1.5 font-bold">${totalDormSeats}</td>
+                                    <td class="border border-black p-1.5">${d.onsite.length}</td>
+                                    <td class="border border-black p-1.5">${d.online.length}</td>
+                                    <td class="border border-black p-1.5">${d.reps.length}</td>
+                                    <td class="border border-black p-1.5">${d.absent.length}</td>
+                                    <td class="border border-black p-1.5 font-bold bg-slate-100">${d.quorum}</td>
+                                </tr>
+                                <tr class="font-bold bg-slate-200">
+                                    <td class="border border-black p-1.5 text-left pl-2">รวมทั้งสิ้น</td>
+                                    <td class="border border-black p-1.5">${totalMeetingSeats}</td>
+                                    <td class="border border-black p-1.5">${c.onsite.length + s.onsite.length + f.onsite.length + d.onsite.length}</td>
+                                    <td class="border border-black p-1.5">${c.online.length + s.online.length + f.online.length + d.online.length}</td>
+                                    <td class="border border-black p-1.5">${allReps.length}</td>
+                                    <td class="border border-black p-1.5">${allAbsents.length}</td>
+                                    <td class="border border-black p-1.5 font-extrabold">${totalAttendingQuorum}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Section 3: Catering Order Breakdown -->
+                    <div class="border border-black p-2.5 bg-slate-50 report-item flex justify-between items-center">
+                        <div>
+                            <div class="font-bold text-sm">2. ยอดการสั่งอาหารจัดเลี้ยงรับรอง ณ ห้องประชุม Onsite:</div>
+                            <div class="text-[11px] text-slate-700">(นับรวมสมาชิกที่มา Onsite + ผู้แทนที่มา Onsite)</div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xl font-bold underline font-mono">${totalCatering}</span> ชุด
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Appointed Representatives List -->
+                    <div class="report-item space-y-1">
+                        <div class="font-bold text-sm text-black">3. รายนามผู้แทนที่ได้รับมอบหมายเข้าร่วมประชุมแทน (${allReps.length} ท่าน):</div>
+                        <div class="pl-4 text-xs space-y-0.5">
+                            ${repListHtml}
+                        </div>
+                    </div>
+
+                    <!-- Section 5: Absent List -->
+                    <div class="report-item space-y-1">
+                        <div class="font-bold text-sm text-black">4. รายชื่อโควตาที่นั่งที่ไม่สะดวกเข้าร่วมประชุม และไม่มอบหมายผู้แทน (${allAbsents.length} ที่นั่ง):</div>
+                        <div class="pl-4 text-xs space-y-0.5">
+                            ${absentListHtml}
+                        </div>
+                    </div>
+
+                    <!-- Section 6: Motions List -->
+                    <div class="report-item space-y-1">
+                        <div class="font-bold text-sm text-black">5. ญัตติที่เสนอเพื่ออภิปรายในที่ประชุม (${allMotions.length} ญัตติ):</div>
+                        <div class="pl-4 text-xs space-y-1">
+                            ${motionsListHtml}
+                        </div>
+                    </div>
+
+                    <!-- Section 7: Unresponded Seats -->
+                    <div class="report-item space-y-1">
+                        <div class="font-bold text-sm text-black">6. โควตาที่นั่งที่ยังไม่ได้ตอบรับแบบฟอร์ม (${totalUnresp} ที่นั่ง):</div>
+                        <div class="pl-4 text-xs grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5">
+                            ${unrespondedHtml}
+                        </div>
+                    </div>
+
+                    <!-- Signatures Block -->
+                    <div class="pt-8 grid grid-cols-2 gap-6 text-center text-xs report-item">
+                        <div class="space-y-8">
+                            <p>ลงชื่อ ..............................................................<br>( .............................................................. )<br>เลขานุการการประชุม</p>
+                        </div>
+                        <div class="space-y-8">
+                            <p>ลงชื่อ ..............................................................<br>( .............................................................. )<br>ประธานที่ประชุมองค์การนักศึกษา<br>(ประธานสภานักศึกษา มหาวิทยาลัยเชียงใหม่)</p>
+                        </div>
+                    </div>
+
+                </div>
+            `;
+
+            docBody.innerHTML = html;
+        }
+
+        function openReportModal(e) {
+            const btn = e ? e.currentTarget : null;
+            let origHtml = "";
+            if (btn) {
+                origHtml = btn.innerHTML;
+                btn.disabled = true;
+                btn.innerHTML = `<svg class="w-4 h-4 animate-spin inline mr-1" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> กำลังสร้าง...`;
+            }
+
+            setTimeout(() => {
+                renderOfficialReport();
+                document.getElementById('reportModal').classList.remove('hidden');
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = origHtml;
+                }
+            }, 100);
+        }
+
+        function triggerPrint(e) {
+            showToast("กำลังเปิดหน้าต่างพิมพ์ / บันทึก PDF...", "info");
+            setTimeout(() => {
+                window.print();
+            }, 150);
+        }
+
+        function closeReportModal() {
+            document.getElementById('reportModal').classList.add('hidden');
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            let colorClasses = "bg-slate-900 text-white border-slate-700 shadow-lg";
+            let icon = "ℹ️";
+            
+            if (type === 'success') {
+                colorClasses = "bg-emerald-900 text-white border-emerald-700 shadow-emerald-900/20";
+                icon = "✅";
+            } else if (type === 'warning') {
+                colorClasses = "bg-amber-800 text-white border-amber-600 shadow-amber-900/20";
+                icon = "⚠️";
+            } else if (type === 'error') {
+                colorClasses = "bg-rose-900 text-white border-rose-700 shadow-rose-900/20";
+                icon = "🚨";
+            }
+
+            toast.className = `px-3.5 py-2.5 rounded-xl border text-xs font-semibold shadow-xl flex items-center gap-2 transition-all duration-300 pointer-events-auto transform translate-y-2 opacity-0 ${colorClasses}`;
+            toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+            
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', '-translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
