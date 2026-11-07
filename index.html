@@ -330,19 +330,6 @@
                             <p class="text-[11px] text-amber-900 font-medium">
                                 📌 <strong>คำชี้แจง:</strong> กรณีมอบหมายผู้แทน กรุณาระบุ ชื่อ-สกุล-ตำแหน่ง ของผู้แทนให้ชัดเจน เพื่อบันทึกลงในรายงานการประชุมอย่างเป็นทางการ
                             </p>
-
-                            <!-- Special Rule Notice for Student Council (สภานักศึกษา) -->
-                            <div id="boxCouncilRepNotice" class="hidden text-[11px] bg-white/95 p-2.5 rounded-lg border border-amber-300 text-amber-950 leading-relaxed space-y-1.5">
-                                <p class="font-bold text-rose-700">⚠️ ระเบียบข้อบังคับสำหรับสภานักศึกษา:</p>
-                                <p class="text-slate-700">
-                                    สมาชิกสภานักศึกษา<strong>ไม่สามารถส่งผู้แทนได้</strong> เว้นแต่ได้รับอนุญาตเป็นกรณีพิเศษจากประธานที่ประชุม (ประธานสภานักศึกษา) ซึ่งประธานจะนำเข้าสู่ที่ประชุมเพื่อขอมติว่าจะมีสิทธิออกเสียงหรือไม่
-                                </p>
-                                <label class="flex items-center gap-2 mt-1.5 pt-1 border-t border-amber-200 cursor-pointer">
-                                    <input type="checkbox" id="fCouncilRepAllowed" onchange="toggleCouncilRepState()" class="accent-amber-700 w-4 h-4 cursor-pointer">
-                                    <span class="text-xs font-bold text-amber-950">ได้รับอนุญาตเป็นกรณีพิเศษจากประธานที่ประชุมแล้ว</span>
-                                </label>
-                            </div>
-
                             <!-- Representative Detailed Input Fields -->
                             <div id="boxRepInputs" class="space-y-2.5">
                                 <div>
@@ -371,7 +358,7 @@
 
                                 <div class="bg-amber-100/80 p-2 rounded-lg text-[10px] text-amber-900 border border-amber-300/80 flex items-center gap-1.5">
                                     <span>💡</span>
-                                    <span><strong>สิทธิ์ในการประชุม:</strong> ผู้แทนที่ได้รับมอบหมายสามารถปฏิบัติหน้าที่ นับเป็นองค์ประชุม และ<strong>สามารถเสนอญัตติได้ด้วย</strong></span>
+                                    <span><strong>สิทธิ์ในการประชุม:</strong> ผู้แทนที่ได้รับมอบหมายสามารถปฏิบัติหน้าที่ นับเป็นองค์ประชุม และ<strong>สามารถเสนอญัตติ</strong></span>
                                 </div>
                             </div>
 
@@ -380,7 +367,7 @@
                         <!-- ================= SECTION 4: MOTION PROPOSAL ================= -->
                         <div id="boxMotionSection" class="transition-all duration-300">
                             <label id="lblMotionPrompt" class="block text-xs font-bold text-slate-800 mb-1">
-                                4. เสนอญัตติเพื่ออภิปรายหรือไม่ (เสนอญัตติได้) *
+                                4. เสนอญัตติเพื่ออภิปรายหรือไม่ *
                             </label>
                             <select id="fHasMotion" required onchange="toggleMotionFields()" class="w-full cmu-input px-3 py-2.5 rounded-xl text-sm transition cursor-pointer">
                                 <option value="ไม่มี" class="text-slate-700">ไม่มีญัตติเสนอ (No Motion)</option>
@@ -694,7 +681,7 @@
                     ⚙️
                 </div>
                 <div>
-                    <h3 class="text-base font-bold text-slate-900">เครื่องมือฝ่ายเลขาธิการการประชุม</h3>
+                    <h3 class="text-base font-bold text-slate-900">เครื่องมือฝ่ายเลขานุการการประชุม</h3>
                     <p class="text-[11px] text-slate-500">ออกลิงก์การประชุม &amp; จัดการรายชื่อโควตาผู้เข้าร่วม (เวลา GMT+7)</p>
                 </div>
             </div>
@@ -705,7 +692,7 @@
                     🔗 ออกลิงก์การประชุม
                 </button>
                 <button type="button" onclick="switchAdminTab('roster')" id="admTabRoster" class="px-3 py-2 border-b-2 border-transparent text-slate-500 hover:text-slate-800 cursor-pointer">
-                    👥 จัดการรายชื่อผู้เข้าร่วม (ส่งชื่อภายหลัง)
+                    👥 จัดการรายชื่อผู้เข้าร่วม
                 </button>
             </div>
 
@@ -814,7 +801,7 @@
                 <div class="flex items-center gap-2">
                     <span class="text-xl">📄</span>
                     <div>
-                        <h3 class="text-base font-bold text-slate-900">รายงานสรุปสถิติองค์ประชุมอย่างเป็นทางการ (Official Summary Report)</h3>
+                        <h3 class="text-base font-bold text-slate-900">รายงานสรุปสถิติองค์ประชุม (Summary Report)</h3>
                         <p class="text-[11px] text-slate-500">องค์การนักศึกษามหาวิทยาลัยเชียงใหม่ (CMU Student Organization)</p>
                     </div>
                 </div>
@@ -835,8 +822,8 @@
                 <!-- Official Header Text -->
                 <div class="text-center border-b-2 border-black pb-3 report-item space-y-1">
                     <div class="font-bold text-lg sm:text-xl text-black">องค์การนักศึกษามหาวิทยาลัยเชียงใหม่</div>
-                    <div class="text-xs sm:text-sm text-black">ร่วมกับ สภานักศึกษามหาวิทยาลัยเชียงใหม่ (ประธานที่ประชุม)</div>
-                    <div class="text-xs text-slate-600">สำนักงานองค์การนักศึกษา อาคารกิจกรรมนักศึกษา มหาวิทยาลัยเชียงใหม่</div>
+                    <div class="text-xs sm:text-sm text-black">โดยสภานักศึกษามหาวิทยาลัยเชียงใหม่</div>
+                    <div class="text-xs text-slate-600">ที่ทำการองค์การนักศึกษามหาวิทยาลัยเชียงใหม่</div>
                 </div>
 
                 <!-- Document Title -->
@@ -870,7 +857,6 @@
 
         /**
          * 1. คณะบริหารสภานักศึกษา (9 ตำแหน่ง)
-         * รายชื่อจริงพร้อมตำแหน่งทางการ (ไม่ระบุรหัสนักศึกษาและชื่อเล่นตามระเบียบ PDPA)
          */
         const defaultCouncilList = [
             "1. วัชรายุทธ ซึมทราย (ประธานสภานักศึกษามหาวิทยาลัยเชียงใหม่)",
@@ -909,7 +895,6 @@
 
         /**
          * 3. นายกสโมสรนักศึกษาคณะและวิทยาลัย (22 ท่าน)
-         * รายชื่อจริงพร้อมตำแหน่งทางการ (ไม่ระบุรหัสนักศึกษาและชื่อเล่นตามระเบียบ PDPA)
          */
         const defaultFacultyList = [
             "1. ณรพัฒ อัตถศาสตร์ (นายกสโมสรนักศึกษาคณะมนุษยศาสตร์)",
@@ -938,7 +923,6 @@
 
         /**
          * 4. คณะกรรมการหอพักนักศึกษา (3 ท่าน)
-         * รายชื่อจริงพร้อมตำแหน่งทางการ (ไม่ระบุรหัสนักศึกษาและชื่อเล่นตามระเบียบ PDPA)
          */
         const defaultDormList = [
             "1. พิเชฐ แซ่ย่าง (ประธานคณะกรรมการหอพักนักศึกษามหาวิทยาลัยเชียงใหม่)",
@@ -959,8 +943,8 @@
             updateClocks();
 
             const urlParams = new URLSearchParams(window.location.search);
-            currentMeetingTitle = urlParams.get('title') || "การประชุมองค์การนักศึกษามหาวิทยาลัยเชียงใหม่ สมัยสามัญ ครั้งที่ 1/2569";
-            const dateText = urlParams.get('dateText') || "วันศุกร์ที่ 14 พฤศจิกายน 2569 เวลา 17.00 - 21.00 น.";
+            currentMeetingTitle = urlParams.get('title') || "ระบบเริ่มต้น รอเลขานุการการประชุมออกลิงก์ให้";
+            const dateText = urlParams.get('dateText') || "(ทดสอบ) วันศุกร์ที่ 14 พฤศจิกายน 2569 เวลา 17.00 - 21.00 น.";
             const deadlineRaw = urlParams.get('deadline');
 
             document.getElementById('displayTitle').innerText = currentMeetingTitle;
@@ -1141,7 +1125,7 @@
             const seat = document.getElementById('fSeat').value;
             const seatNotice = document.getElementById('seatNotice');
             if (seat) {
-                seatNotice.innerText = `โควตาที่นั่ง: ${seat} (1 โควตานับ 1 สิทธิ์)`;
+                seatNotice.innerText = `โควตาที่นั่ง: ${seat} (1 สิทธิ์)`;
             } else {
                 seatNotice.innerText = '';
             }
@@ -1168,7 +1152,7 @@
             const inpRepPos = document.getElementById('fRepPosition');
 
             if (status === 'Onsite') {
-                statusNotice.innerText = "📍 เข้าร่วมประชุมด้วยตนเอง ณ ห้องประชุม (นับองค์ประชุม • จัดเตรียมอาหาร • เสนอญัตติได้)";
+                statusNotice.innerText = "📍 เข้าร่วมประชุมด้วยตนเอง ณ ห้องประชุม";
                 boxRep.classList.add('hidden');
                 inpRepName.required = false;
                 inpRepPos.required = false;
@@ -1177,7 +1161,7 @@
                 boxMotionSection.classList.remove('hidden');
                 lblMotionPrompt.innerHTML = "4. เสนอญัตติเพื่ออภิปรายหรือไม่ (เสนอญัตติได้) *";
             } else if (status === 'Online') {
-                statusNotice.innerText = "💻 เข้าร่วมประชุมด้วยตนเอง ผ่านระบบสื่ออิเล็กทรอนิกส์ (นับองค์ประชุม • เสนอญัตติได้)";
+                statusNotice.innerText = "💻 เข้าร่วมประชุมด้วยตนเอง ผ่านระบบสื่ออิเล็กทรอนิกส์";
                 boxRep.classList.add('hidden');
                 inpRepName.required = false;
                 inpRepPos.required = false;
@@ -1186,7 +1170,7 @@
                 boxMotionSection.classList.remove('hidden');
                 lblMotionPrompt.innerHTML = "4. เสนอญัตติเพื่ออภิปรายหรือไม่ (เสนอญัตติได้) *";
             } else if (status === 'มอบหมายผู้แทน') {
-                statusNotice.innerText = "🤝 ไม่สะดวกเข้าร่วมประชุมด้วยตนเอง และมอบหมายผู้แทนเข้าร่วมแทน (ผู้แทนสามารถเสนอญัตติได้)";
+                statusNotice.innerText = "🤝 ไม่สะดวกเข้าร่วมประชุมด้วยตนเอง และมอบหมายผู้แทนเข้าร่วมแทน (ผู้แทนมีสิทธิเหมือนผู้มีสิทธิ์เข้าประชุมทุกประการ)";
                 boxRep.classList.remove('hidden');
 
                 if (selectedType === 'คณะบริหารสภานักศึกษา' || selectedType === 'สภานักศึกษา') {
