@@ -821,9 +821,8 @@
                 
                 <!-- Official Header Text -->
                 <div class="text-center border-b-2 border-black pb-3 report-item space-y-1">
-                    <div class="font-bold text-lg sm:text-xl text-black">องค์การนักศึกษามหาวิทยาลัยเชียงใหม่</div>
+                    <div class="font-bold text-lg sm:text-xl text-black">การประชุมองค์การนักศึกษามหาวิทยาลัยเชียงใหม่</div>
                     <div class="text-xs sm:text-sm text-black">โดยสภานักศึกษามหาวิทยาลัยเชียงใหม่</div>
-                    <div class="text-xs text-slate-600">ที่ทำการองค์การนักศึกษามหาวิทยาลัยเชียงใหม่</div>
                 </div>
 
                 <!-- Document Title -->
@@ -1153,7 +1152,6 @@
             const selectedType = document.querySelector('input[name="memberType"]:checked')?.value;
             
             const boxRep = document.getElementById('boxRepresentative');
-            const boxCouncilRepNotice = document.getElementById('boxCouncilRepNotice');
             const boxMotionSection = document.getElementById('boxMotionSection');
             const lblMotionPrompt = document.getElementById('lblMotionPrompt');
             const statusNotice = document.getElementById('statusNotice');
@@ -1182,16 +1180,8 @@
             } else if (status === 'มอบหมายผู้แทน') {
                 statusNotice.innerText = "🤝 ไม่สะดวกเข้าร่วมประชุมด้วยตนเอง และมอบหมายผู้แทนเข้าร่วมแทน (ผู้แทนมีสิทธิเหมือนผู้มีสิทธิ์เข้าประชุมทุกประการ)";
                 boxRep.classList.remove('hidden');
-
-                if (selectedType === 'คณะบริหารสภานักศึกษา' || selectedType === 'สภานักศึกษา') {
-                    boxCouncilRepNotice.classList.remove('hidden');
-                    // Check if council member is permitted
-                    toggleCouncilRepState();
-                } else {
-                    boxCouncilRepNotice.classList.add('hidden');
-                    inpRepName.required = true;
-                    inpRepPos.required = true;
-                }
+                inpRepName.required = true;
+                inpRepPos.required = true;
 
                 // Motion enabled for representative
                 boxMotionSection.classList.remove('hidden');
@@ -1214,15 +1204,6 @@
                 boxMotionSection.classList.remove('hidden');
                 lblMotionPrompt.innerHTML = "4. เสนอญัตติเพื่ออภิปรายหรือไม่ *";
             }
-        }
-
-        function toggleCouncilRepState() {
-            const isCouncilRepPermitted = document.getElementById('fCouncilRepAllowed').checked;
-            const inpRepName = document.getElementById('fRepName');
-            const inpRepPos = document.getElementById('fRepPosition');
-
-            inpRepName.required = isCouncilRepPermitted;
-            inpRepPos.required = isCouncilRepPermitted;
         }
 
         function toggleMotionFields() {
@@ -1359,16 +1340,7 @@
             let repMode = "";
 
             if (status === 'มอบหมายผู้แทน') {
-                if (selectedType === 'คณะบริหารสภานักศึกษา' || selectedType === 'สภานักศึกษา') {
-                    if (!document.getElementById('fCouncilRepAllowed').checked) {
-                        showToast("สภานักศึกษาไม่สามารถส่งผู้แทนได้ เว้นแต่ได้รับอนุญาตจากประธานที่ประชุม", "warning");
-                        return;
-                    }
-                    hasRep = "มี (อนุญาตกรณีพิเศษ)";
-                } else {
-                    hasRep = "มี";
-                }
-
+                hasRep = "มี";
                 repName = document.getElementById('fRepName').value.trim();
                 repPos = document.getElementById('fRepPosition').value.trim();
                 repMode = document.getElementById('fRepMode').value;
@@ -1753,14 +1725,10 @@
                 // Representative Details
                 let repHtml = '';
                 if (item.status === 'มอบหมายผู้แทน' && item.repName) {
-                    let councilRepNotice = (item.hasRep === 'มี (อนุญาตกรณีพิเศษ)')
-                        ? '<span class="text-[9px] text-amber-900 font-bold bg-amber-200 px-1.5 py-0.2 rounded ml-1">มติสิทธิ์ออกเสียงขึ้นอยู่กับที่ประชุม</span>'
-                        : '';
                     repHtml = `
                         <div class="mt-2 bg-amber-50/80 p-2.5 rounded-lg border border-amber-200 text-xs text-amber-950 space-y-1">
                             <div class="flex items-center justify-between font-bold text-amber-900">
                                 <span>🤝 ผู้แทน: <u>${escapeHtml(item.repName)}</u></span>
-                                ${councilRepNotice}
                             </div>
                             <div class="text-[11px] text-slate-700">
                                 <strong>ตำแหน่งในสังกัด:</strong> ${escapeHtml(item.repPosition)} | <strong>รูปแบบการเข้าร่วม:</strong> ${escapeHtml(item.repMode || 'Onsite')}
