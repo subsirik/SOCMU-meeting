@@ -1105,16 +1105,26 @@
 
         /* ------------------ FORM HANDLERS & 4 ATTENDANCE CHOICES ------------------ */
 
+        let lastSelectedOrgType = '';
+
         function handleTypeChange() {
             const selectedType = document.querySelector('input[name="memberType"]:checked')?.value;
             const select = document.getElementById('fSeat');
             const seatNotice = document.getElementById('seatNotice');
             
             if (!selectedType) {
+                lastSelectedOrgType = '';
                 select.disabled = true;
                 select.innerHTML = '<option value="" class="text-slate-400">-- กรุณาเลือกสังกัดองค์กรในข้อ 1 ก่อน --</option>';
                 seatNotice.innerText = '';
                 return;
+            }
+
+            // If user explicitly switched to another organization, reset selected seat
+            if (selectedType !== lastSelectedOrgType) {
+                lastSelectedOrgType = selectedType;
+                select.value = '';
+                seatNotice.innerText = '';
             }
 
             updateSeatDropdown(cachedData);
@@ -1240,6 +1250,7 @@
 
         /**
          * Mutual exclusivity: Each seat can respond only once
+         * Preserves current selection across background polling
          */
         function updateSeatDropdown(meetingData) {
             const select = document.getElementById('fSeat');
@@ -1257,8 +1268,24 @@
 
             const targetTotal = targetList.length;
 
-            const respondedSeats = new Set(meetingData.map(item => item.seatTitle));
+            const respondedSeats = new Set((meetingData || []).map(item => item.seatTitle));
             const availableSeats = targetList.filter(seat => !respondedSeats.has(seat));
+            const currentVal = select.value;
+
+            // Check if current options match available seats to prevent unnecessary DOM wipe
+            const existingOptions = Array.from(select.options).slice(1).map(o => o.value);
+            const isSameList = existingOptions.length === availableSeats.length &&
+                               existingOptions.every((v, i) => v === availableSeats[i]);
+
+            if (isSameList && select.options.length > 0) {
+                if (currentVal && availableSeats.includes(currentVal)) {
+                    select.value = currentVal;
+                }
+                if (lbl) {
+                    lbl.innerHTML = `2. เลือกตำแหน่ง / สังกัด / รายชื่อของคุณ (${selectedType}) * <span class="text-purple-700 font-bold ml-1">(คงเหลืออีก ${availableSeats.length} ที่นั่ง)</span>`;
+                }
+                return;
+            }
 
             select.innerHTML = '';
 
@@ -1273,6 +1300,7 @@
                 if (lbl) {
                     lbl.innerHTML = `2. เลือกตำแหน่ง / สังกัด / รายชื่อของคุณ * <span class="text-emerald-700 font-bold ml-1">(ลงทะเบียนครบทุกที่นั่งแล้ว)</span>`;
                 }
+                document.getElementById('seatNotice').innerText = '';
             } else {
                 select.disabled = false;
 
@@ -1289,6 +1317,12 @@
                     opt.className = "bg-white text-slate-900";
                     select.appendChild(opt);
                 });
+
+                // Preserve previously selected seat if still available
+                if (currentVal && availableSeats.includes(currentVal)) {
+                    select.value = currentVal;
+                    document.getElementById('seatNotice').innerText = `โควตาที่นั่ง: ${currentVal} (1 สิทธิ์)`;
+                }
 
                 if (lbl) {
                     lbl.innerHTML = `2. เลือกตำแหน่ง / สังกัด / รายชื่อของคุณ (${selectedType}) * <span class="text-purple-700 font-bold ml-1">(คงเหลืออีก ${availableSeats.length} ที่นั่ง)</span>`;
@@ -1373,12 +1407,32 @@
             if (API_URL && !API_URL.includes("ใส่_WEB_APP_URL")) {
                 const params = new URLSearchParams({
                     action: 'insert',
-                    ...record
+                    // Standard keys
+                    timestamp: record.timestamp,
+                    meetingTitle: record.meetingTitle,
+                    memberType: record.memberType,
+                    seatTitle: record.seatTitle,
+                    status: record.status,
+                    hasRep: record.hasRep,
+                    repName: record.repName,
+                    repPosition: record.repPosition,
+                    repMode: record.repMode,
+                    hasMotion: record.hasMotion,
+                    motionDetail: record.motionDetail,
+                    remark: record.remark,
+                    // Schema compatibility keys for live Google Sheet
+                    timestamps: record.timestamp,
+                    meetingtitle: record.meetingTitle,
+                    Title: record.seatTitle,
+                    repPos: record.repPosition,
+                    motionDetails: record.motionDetail,
+                    REMARK: record.remark
                 });
 
                 fetch(API_URL + '?' + params.toString())
                 .then(res => res.json())
                 .then(data => {
+                    saveToLocalStorage(record);
                     onSubmissionSuccess();
                 })
                 .catch(err => {
@@ -1405,13 +1459,36 @@
             }
         }
 
+        /**
+         * Normalizes records from various Google Apps Script / Sheet schema variations
+         */
+        function normalizeRecord(item) {
+            if (!item || typeof item !== 'object') return null;
+            return {
+                timestamp: item.timestamp || item.timestamps || item.Timestamp || '',
+                meetingTitle: (item.meetingTitle || item.meetingtitle || item.MeetingTitle || '').trim(),
+                memberType: (item.memberType || item.MemberType || '').trim(),
+                seatTitle: (item.seatTitle || item.Title || item.SeatTitle || item.seat || '').trim(),
+                status: (item.status || item.Status || '').trim(),
+                hasRep: item.hasRep || item.HasRepresentative || item.hasRepresentative || 'ไม่มี',
+                repName: (item.repName || item.RepName || '').trim(),
+                repPosition: (item.repPosition || item.repPos || item.RepPosition || '').trim(),
+                repMode: (item.repMode || item.repAttendanceMode || item.RepAttendanceMode || '').trim(),
+                hasMotion: item.hasMotion || item.HasMotion || 'ไม่มี',
+                motionDetail: (item.motionDetail || item.motionDetails || item.MotionDetail || '').trim(),
+                remark: (item.remark || item.REMARK || item.Remark || '').trim()
+            };
+        }
+
         function saveToLocalStorage(record) {
             let localRecords = [];
             try {
                 localRecords = JSON.parse(localStorage.getItem('cmu_so_records') || '[]');
             } catch(e){}
-            localRecords.push(record);
-            localStorage.setItem('cmu_so_records', JSON.stringify(localRecords));
+            const norm = normalizeRecord(record);
+            const filtered = localRecords.filter(r => (r.seatTitle || r.Title) !== norm.seatTitle);
+            filtered.push(norm);
+            localStorage.setItem('cmu_so_records', JSON.stringify(filtered));
         }
 
         function fetchData() {
@@ -1420,11 +1497,17 @@
                 .then(res => res.json())
                 .then(data => {
                     if (Array.isArray(data)) {
-                        cachedData = data.filter(item => item.meetingTitle === currentMeetingTitle);
+                        const currentNorm = (currentMeetingTitle || '').trim().toLowerCase();
+                        cachedData = data.map(normalizeRecord).filter(item => {
+                            if (!item) return false;
+                            const titleNorm = item.meetingTitle.toLowerCase();
+                            return titleNorm === currentNorm || (!titleNorm && currentNorm.includes("ระบบเริ่มต้น"));
+                        });
                         processData();
                     }
                 })
                 .catch(err => {
+                    console.warn("fetch API failed, loading local:", err);
                     loadFromLocalStorage();
                 });
             } else {
@@ -1434,7 +1517,12 @@
             function loadFromLocalStorage() {
                 try {
                     const localRecords = JSON.parse(localStorage.getItem('cmu_so_records') || '[]');
-                    cachedData = localRecords.filter(item => item.meetingTitle === currentMeetingTitle);
+                    const currentNorm = (currentMeetingTitle || '').trim().toLowerCase();
+                    cachedData = (Array.isArray(localRecords) ? localRecords : []).map(normalizeRecord).filter(item => {
+                        if (!item) return false;
+                        const titleNorm = item.meetingTitle.toLowerCase();
+                        return titleNorm === currentNorm || (!titleNorm && currentNorm.includes("ระบบเริ่มต้น"));
+                    });
                     processData();
                 } catch(e){}
             }
@@ -1507,10 +1595,10 @@
             document.getElementById('dormOnline').innerText = d.online;
             document.getElementById('dormRepCount').innerText = d.reps;
 
-            // Summary
+            // Summary (Fix: removed duplicate 'คน' and 'เรื่อง' since HTML already contains the unit label)
             document.getElementById('totalCateringCount').innerText = totalCatering;
-            document.getElementById('totalAbsentCount').innerText = `${totalAbsent} คน`;
-            document.getElementById('totalMotionCount').innerText = `${totalMotions} เรื่อง`;
+            document.getElementById('totalAbsentCount').innerText = totalAbsent;
+            document.getElementById('totalMotionCount').innerText = totalMotions;
 
             // Filter Badges
             document.getElementById('cntFilterCouncil').innerText = councilResponses.length;
@@ -1620,10 +1708,13 @@
             }
 
             if (filtered.length === 0) {
+                const emptyMsg = (cachedData && cachedData.length > 0)
+                    ? 'ไม่มีข้อมูลตามเงื่อนไขตัวกรองที่เลือก'
+                    : 'ยังไม่มีข้อมูลการตอบรับสำหรับวาระการประชุมนี้';
                 document.getElementById('dataList').innerHTML = `
                     <div class="flex flex-col items-center justify-center py-10 text-slate-400 space-y-1 border border-dashed border-slate-300 rounded-xl">
                         <span class="text-xl">📋</span>
-                        <p class="text-xs font-medium text-slate-500">ไม่มีข้อมูลตามเงื่อนไขที่เลือก</p>
+                        <p class="text-xs font-medium text-slate-500">${emptyMsg}</p>
                     </div>
                 `;
                 return;
@@ -1694,6 +1785,11 @@
                     ? `<p class="text-[11px] text-slate-500 mt-1 italic"><strong>หมายเหตุ:</strong> ${escapeHtml(item.remark)}</p>` 
                     : '';
 
+                // Timestamp
+                let timeHtml = item.timestamp 
+                    ? `<div class="text-[10px] text-slate-400 mt-1.5 flex items-center gap-1"><span>🕒 ${escapeHtml(item.timestamp)}</span></div>` 
+                    : '';
+
                 html += `
                     <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 hover:border-purple-300 transition">
                         <div class="flex items-center justify-between gap-2">
@@ -1706,6 +1802,7 @@
                         ${repHtml}
                         ${motionHtml}
                         ${remarkHtml}
+                        ${timeHtml}
                     </div>
                 `;
             });
